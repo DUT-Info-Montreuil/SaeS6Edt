@@ -1,0 +1,23 @@
+name: Docker Build Frontend
+
+on:
+  push:
+    branches:
+      - develop
+      
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    env:
+      IMAGE_NAME: ismaelargence/courroux_frontend:latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Build and Push Frontend Image
+        run: |
+          docker build -t $IMAGE_NAME .
+          echo "${{ secrets.DOCKER_HUB_TOKEN }}" | docker login -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin
+          docker push $IMAGE_NAME

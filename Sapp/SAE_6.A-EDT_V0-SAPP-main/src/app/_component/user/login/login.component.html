@@ -1,0 +1,37 @@
+<div class="login">
+    <div class="content">
+        <img src="assets/images/logoiut.png" alt="logo iut" id="logoModeSombre">
+        <img src="assets/images/logoiutclair.png" alt="logo iut" id="logoModeClair">
+        <p id="welcome" class="mt-5 ">Bienvenue sur l’ENT 👋</p>
+        <p id="id" class="mt-5">identifiez vous !</p>
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()"
+        method="post" id="form" autocomplete="off webauthn"> 
+
+            <div class='textinput relative'>
+                <input type='text' formControlName="username" name="username" class='input' id="username" required autocomplete="off webauthn">
+                <label class='label'>Entrez votre identifiant</label>
+                <span class='line'></span>
+            </div>
+            <div class='textinput'>
+                <input [type]='password' formControlName="password" name="password"  class='input' required autocomplete="off webauthn">
+                <label class='label'>Entrez votre mot de passe</label>
+                <span class='line'></span>
+            </div>
+            <div class="flex items-start mt-5">
+                <div class="flex items-center h-5">
+                  <input (click)="onClick()" id="remember" type="checkbox" value="" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" required>
+                </div>
+                <label for="remember" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Afficher le mot de passe</label>
+            </div>
+            <button class="w-9/12 relative inline-flex items-center justify-center p-0.5 mt-8 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800">
+                <span class="w-full relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+                    <p id="connecter">se connecter</p> 
+                </span>
+            </button>
+        </form>
+    </div>
+</div>
+
+<div class="image">
+    <img [src]="imageName" alt="figure 3d abstraite" id="art">
+</div>

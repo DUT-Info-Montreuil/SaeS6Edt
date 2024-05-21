@@ -1,0 +1,320 @@
+<div class="mx-10 mt-5">
+    <div>
+        <button (click)="redirectToEdt()" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded mr-10 mt-2 mb-2">Retour à l'emploi du temps</button>
+        <label for="choix"  class="text-xl text-center block mb-4 font-medium text-gray-900 dark:text-white">Choisissez vos options</label>
+        <select id="choix"  (change)="changerSelection($event)" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <option selected="" disabled="" value="">Choisir...</option>
+
+            <option value="formSalle">Salle</option>
+            <option value="formProfesseur">Professeur</option>
+            <option value="formRessource">Ressource</option>
+            <option value="formGroupe">Groupe</option>
+            <option value="formResponsable">Responsable</option>
+            <option value="formPromo">Promotion</option>
+        </select>
+        <button *ngIf="formSelectionne === 'formPromo'" type="button" (click)="ouvrirModalAjoutPromo()" class="w-full mt-5 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Ajouter une promotion</button>
+        <div *ngIf="formSelectionne == 'formGroupe'">
+            <label for="promo" class="mt-5 text-xl text-center block mb-4 font-medium text-gray-900 dark:text-white">Promotion</label>
+            <select required id="niveau" (change)="changerPromo($event)"  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option selected="" disabled="" value="">Choisir...</option>
+                <option *ngFor="let promo of promos" [value]="promo.id">{{promo.group.name}}</option>
+            </select>
+        </div>
+        
+    </div>
+
+    <div class="mt-10" *ngIf="formSelectionne !== 'formGroupe' && formSelectionne !== 'formPromo'">
+        <div id="accordion-collapse" data-accordion="collapse" *ngIf="formSelectionne">
+            <h2 id="accordion-collapse-heading-1">
+            <button type="button" class="bg-gray-300 dark:bg-slate-900 flex items-center justify-between w-full p-5 font-medium rtl:text-right text-gray-700 border border-b-0 border-gray-200 rounded-t-xl focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 gap-3"
+                (click)="isSection1Open = !isSection1Open" [attr.aria-expanded]="isSection1Open" aria-controls="accordion-collapse-body-1">
+                <span>Ajout {{selection}}</span>
+                <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5" />
+                </svg>
+            </button>
+            </h2>
+            <div id="accordion-collapse-body-1" [hidden]="!isSection1Open" aria-labelledby="accordion-collapse-heading-1" class="bg-stone-100 dark:bg-slate-800">
+                <div class="p-5 border border-t-0 border-gray-200 dark:border-gray-700">
+                    <div *ngIf="formSelectionne == 'formGroupe' && idPromoSelectionnee === null">
+                        <h5 class="text-center text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Veuillez séléctionner une promo</h5>
+                    </div>
+
+                    <form [formGroup]="formAddSalle" (ngSubmit)="onSubmitAddSalle($event)"
+                    *ngIf="formSelectionne === 'formSalle'">
+                        <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nom</label>
+                        <input formControlName="name" type="text" id="name" required class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <label for="ordi" class="mt-5 block mb-2 text-sm font-medium text-gray-900 dark:text-white">nombre d'ordinateurs</label>
+                        <input formControlName="ordi" type="number" id="ordi" required class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <label for="videoProjecteur" class="mt-5 block mb-2 text-sm font-medium text-gray-900 dark:text-white">nombre de videos projecteurs</label>
+                        <input formControlName="videoProjecteur" type="number" id="videoProjecteur" required class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <label for="tableauNumerique" class="mt-5 block mb-2 text-sm font-medium text-gray-900 dark:text-white">nombre de tableaux numériques</label>
+                        <input formControlName="tableauNumerique" type="number" id="tableauNumerique" required class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <input type="file" #fileInputRoom (change)="onFileSelected()" style="display: none" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                        <button type="submit" id="withoutCSV" class="mt-5 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Ajouter</button>
+                        <button type="submit" id="withCSV" (click)="fileInputRoom.click()" class="mt-5 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Ajouter via CSV</button>
+                    </form>
+
+                    <form [formGroup]="formAddProfesseur" (ngSubmit)="onSubmitAddProfesseur($event)"
+                    *ngIf="formSelectionne === 'formProfesseur'">
+                        <label for="lastname" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nom</label>
+                        <input formControlName="lastname" required type="text" id="lastname" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <label for="name" class="mt-5 block mb-2 text-sm font-medium text-gray-900 dark:text-white">Prénom</label>
+                        <input formControlName="name" required type="text" id="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <label for="username" class="mt-5 block mb-2 text-sm font-medium text-gray-900 dark:text-white">Identifiant</label>
+                        <input formControlName="username" required type="text" id="username" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <label for="password" class="mt-5 block mb-2 text-sm font-medium text-gray-900 dark:text-white">Mot de passe</label>
+                        <input formControlName="password" required type="text" id="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <input type="file" #fileInputTeacher (change)="onFileSelected()" style="display: none" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                        <button type="submit" id="withoutCSV" class="mt-5 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Ajouter</button>
+                        <button type="submit" id="withCSV" (click)="fileInputTeacher.click()" class="mt-5 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Ajouter via CSV</button>
+                    </form>
+
+                    <form [formGroup]="formAddResponsable" (ngSubmit)="onSubmitAddResponsable()"
+                    *ngIf="formSelectionne === 'formResponsable'">
+                        <label for="lastname" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nom</label>
+                        <input formControlName="lastname" required type="text" id="lastname" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <label for="name" class="mt-5 block mb-2 text-sm font-medium text-gray-900 dark:text-white">Prénom</label>
+                        <input formControlName="name" required type="text" id="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <label for="username" class="mt-5 block mb-2 text-sm font-medium text-gray-900 dark:text-white">Identifiant</label>
+                        <input formControlName="username" required type="text" id="username" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <label for="password" class="mt-5 block mb-2 text-sm font-medium text-gray-900 dark:text-white">Mot de passe</label>
+                        <input formControlName="password" required type="text" id="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <button type="submit" class="mt-5 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Ajouter</button>
+                    </form>
+
+                    <form [formGroup]="formAddRessource" (ngSubmit)="onSubmitAddRessource()"
+                    *ngIf="formSelectionne === 'formRessource'">
+                        <label for="nonamem" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nom</label>
+                        <input required formControlName="name" type="text" id="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <label for="initial" class="mt-5 block mb-2 text-sm font-medium text-gray-900 dark:text-white">Initial (5 caractères max)</label>
+                        <input required formControlName="initial" type="text" id="initial" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <label for="choixPromo" class="mt-5 block mb-2 text-sm font-medium text-gray-900 dark:text-white">Promo</label>
+                        <select required formControlName="id_promo" id="id_promo" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            <option selected="" disabled="" value="">Choisir...</option>
+                            <option *ngFor="let promo of promos" [value]="promo.id">{{promo.group.name}}</option>
+                        </select>
+                        <label for="hs-color-input" class="block text-sm font-medium my-2 dark:text-white w-full">Color picker</label>
+                        <div class="flex flex-row rounded-lg overflow-hidden">
+                            <div class="rounded-3xl w-1/12 overflow-hidden">
+                                <input formControlName="color"  type="color" class="w-full block cursor-default h-24"  [(ngModel)]="color" title="Choose your color"/>
+                            </div>
+                            <div class="w-11/12 flex flex-col items-center gap-2">
+                                <h1 class="text-2xl text-white">Visualisation</h1>
+                                <div class="w-3/4 flex items-center justify-center text-white rounded-lg" [style.background-color]="color">
+                                    <div class="titre h-full w-3/4 flex flex-col justify-between relative">
+                                        <div class="item-center text-center">
+                                        <div class="flex flex-row">
+                                            <div class="flex-1 text-start">A2.05</div>
+                                            <div class="flex-1 text-center">
+                                            Cours
+                                            </div>
+                                            <div class="flex-1 text-end">PB</div>
+                                        </div>
+                                        </div>
+                                        
+                                        <div class="flex flex-row items-center justify-center">
+                                        <img src="assets/images/clock.png" alt="Logo" class="w-[18px]" >
+                                        <h2>00:00 - 00:00 </h2>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="mt-5 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Ajouter</button>
+                    </form>
+                </div>
+            </div>
+            <h2 id="accordion-collapse-heading-2">
+            <button type="button" class="bg-gray-300 dark:bg-slate-900 flex items-center justify-between w-full p-5 font-medium rtl:text-right text-gray-700 border border-gray-200 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 gap-3" 
+                (click)="isSection2Open = !isSection2Open" [attr.aria-expanded]="isSection2Open" aria-controls="accordion-collapse-body-2">
+                <span>{{selection}}s</span>
+                <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5" />
+                </svg>
+            </button>
+            </h2>
+            <div id="accordion-collapse-body-2" [hidden]="!isSection2Open" aria-labelledby="accordion-collapse-heading-2" class="bg-stone-100 dark:bg-slate-800">
+                <div class="p-5 border border-t-0 border-gray-200 dark:border-gray-700">
+                    <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                            <svg class="w-4 h-4 text-gray-700 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                            </svg>
+                        </div>
+                        <input type="search" name="search" [(ngModel)]="searchText" autocomplete="off" class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Nom" required>
+                    </div>
+                    <div>
+                        <select *ngIf="formSelectionne === 'formRessource'" required id="id_promo" (change)="onChangePromoRessource($event)" class="mt-5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            <option *ngFor="let promo of promos" [value]="promo.id">{{promo.group.name}}</option>
+                        </select>
+                    </div>
+                    <div class="mt-5 relative overflow-x-auto shadow-md sm:rounded-lg">
+                        <table *ngIf="formSelectionne === 'formSalle'" class="w-full text-sm text-left rtl:text-right text-gray-700 dark:text-gray-400">
+                            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3">salle</th>
+                                    <th scope="col" class="px-6 py-3">nombre d'ordinateurs</th>
+                                    <th scope="col" class="px-6 py-3">nombre de tableaus numérique</th>
+                                    <th scope="col" class="px-6 py-3">nombre de video projecteurs</th>
+                                    <th scope="col" class="px-6 py-3"><span class="sr-only">Edit</span></th>
+                                    <th scope="col" class="px-6 py-3"><span class="sr-only">Remove</span></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let salle of salles | filter:searchText" class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
+                                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{salle.nom}}</th>
+                                    <td class="px-6 py-4">{{salle.ordi}}</td>
+                                    <td class="px-6 py-4">{{salle.tableauNumerique}}</td>
+                                    <td class="px-6 py-4">{{salle.videoProjecteur}}</td>
+                                    <td class="px-6 py-4 text-right"><a (click)="ouvrirModalModif(salle)" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Modifier</a></td>
+                                    <td class="px-6 py-4 text-right"><a (click)="ouvrirModalDelete(salle)" class="font-medium text-red-600 dark:text-red-500 hover:underline">Supprimer</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table *ngIf="formSelectionne === 'formProfesseur'" class="w-full text-sm text-left rtl:text-right text-gray-700 dark:text-gray-400">
+                            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3">Professeur</th>
+                                    <th scope="col" class="px-6 py-3">prenom</th>
+                                    <th scope="col" class="px-6 py-3">initial</th>
+                                    <th scope="col" class="text-center py-3">activation</th>
+                                    <th scope="col" class="px-6 py-3"><span class="sr-only">Edit</span>
+                                    </th><th scope="col" class="px-6 py-3"><span class="sr-only">Remove</span></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let prof of profs | filter:searchText" class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
+                                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{prof.staff.user.lastname}}</th>
+                                    <td class="px-6 py-4">{{prof.staff.user.name}}</td>
+                                    <td class="px-6 py-4">{{prof.staff.initial}}</td>
+                                    <td class="pt-2">
+                                        <div class="flex justify-center items-center rounded-xl overflow-hidden">
+                                            <button type="button" [ngClass]="{'bg-blue-500': prof.activated, 'bg-gray-300': !prof.activated}" (click)="toggleActivationTeacher(prof)" class="rounded-xl bg-blue-500 w-full h-8"></button>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 text-right"><a (click)="ouvrirModalModif(prof)" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Modifier</a></td>
+                                    <td class="px-6 py-4 text-right"><a (click)="ouvrirModalDelete(prof)" class="font-medium text-red-600 dark:text-red-500 hover:underline">Supprimer</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table *ngIf="formSelectionne === 'formResponsable'" class="w-full text-sm text-left rtl:text-right text-gray-700 dark:text-gray-400">
+                            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3">Professeur</th>
+                                    <th scope="col" class="px-6 py-3">prenom</th>
+                                    <th scope="col" class="px-6 py-3">initial</th>
+                                    <th scope="col" class="px-6 py-3"><span class="sr-only">Edit</span>
+                                    </th><th scope="col" class="px-6 py-3"><span class="sr-only">Remove</span></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let resp of responsables | filter:searchText" class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
+                                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{resp.staff.user.lastname}}</th>
+                                    <td class="px-6 py-4">{{resp.staff.user.name}}</td>
+                                    <td class="px-6 py-4">{{resp.staff.initial}}</td>
+                                    <td class="px-6 py-4 text-right"><a (click)="ouvrirModalModif(resp)" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Modifier</a></td>
+                                    <td class="px-6 py-4 text-right"><a (click)="ouvrirModalDelete(resp)" class="font-medium text-red-600 dark:text-red-500 hover:underline">Supprimer</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table *ngIf="formSelectionne === 'formRessource'" class="w-full text-sm text-left rtl:text-right text-gray-700 dark:text-gray-400">
+                            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3">initial</th>
+                                    <th scope="col" class="px-6 py-3">nom</th>
+                                    <th scope="col" class="px-6 py-3"><span class="sr-only">Edit</span>
+                                    </th><th scope="col" class="px-6 py-3"><span class="sr-only">Remove</span></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let ressource of ressources | filter:searchText" class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
+                                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ressource.initial}}</th>
+                                    <td class="px-6 py-4">{{ressource.name}}</td>
+                                    <td class="px-6 py-4 text-right"><a (click)="ouvrirModalModif(ressource)" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Modifier</a></td>
+                                    <td class="px-6 py-4 text-right"><a (click)="ouvrirModalDelete(ressource)" class="font-medium text-red-600 dark:text-red-500 hover:underline">Supprimer</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mt-10" *ngIf="formSelectionne == 'formGroupe' && idPromoSelectionnee">
+        <div class="grid grid-cols-4 gap-4">
+            <div class="col-span-2">
+                <form [formGroup]="formAddGroupe" (ngSubmit)="onSubmitAddGroupe(true)">
+                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Ajouter un groupe</h5>
+                    <div class="mb-5">
+                        <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nom du groupe</label>
+                        <input formControlName="name" type="name" id="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                    </div>
+                    <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Ajouter</button>
+                </form>
+            </div>
+            <div class="col-span-2">
+                <form [formGroup]="formAddGroupe" (ngSubmit)="onSubmitAddGroupe(false)">
+                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Ajouter un sous-groupe</h5>
+                    <div class="mb-5">
+                        <label for="parent" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Groupe parent</label>
+                        <select formControlName="id_group_parent" required id="parent"  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            <option *ngFor="let group of groups" [value]="group.id">{{group.name}}</option>
+                        </select>
+                        <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nom du sous-groupe</label>
+                        <input formControlName="name" type="name" id="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                    </div>
+                    <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Ajouter</button>
+                </form>
+            </div>
+            <div *ngFor="let group of groups" class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                    <thead (click)="getTreeGroup(group.id)" class="text-xs text-gray-700 bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr>
+                            <th scope="col" class="px-6 py-3">{{group.name}} (clicker pour afficher)</th>
+                            <th scope="col" class="px-6 py-3 text-right">
+                                <button (click)="ouvrirModalDelete(group)" type="button" class="px-3 py-2 text-xs font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Supprimer</button>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let sousGroupe of sousGroupes" class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
+                            <th *ngIf="sousGroupe.id_group_parent == group.id" scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{sousGroupe.name}} (id : {{sousGroupe.id}})</th>
+                            <td *ngIf="sousGroupe.id_group_parent == group.id" class="px-6 py-4 text-right">
+                                <a (click)="ouvrirModalDelete(sousGroupe)" class="font-medium text-red-600 dark:text-red-500 hover:underline">Supprimer</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="mt-10" *ngIf="formSelectionne == 'formPromo'">
+        <div *ngFor="let promoManager of promoManagers;" class="mt-5 relative overflow-x-auto shadow-md sm:rounded-lg">
+            <table class="w-full text-sm text-left rtl:text-right text-gray-700 dark:text-gray-400" style="table-layout: fixed;">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                        <th scope="col" class="px-6 py-3">id : {{promoManager.promo.id}}</th>
+                        <th scope="col" class="px-6 py-3">{{(promoManager.promo.group.name)}}</th>
+                        <th scope="col" class="px-6 py-3">{{promoManager.promo.year}}</th>
+                        <th scope="col" class="px-6 py-3"><a (click)="ouvrirModalModif({resp:getResponsableNotInPromo(promoManager.promo), promo: promoManager.promo})" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Modifier</a></th>
+                        <th scope="col"><a (click)="togglePromoActivee(promoManager.promo.id)">{{promoManager.promo.activated ? "Activé" : "Désactivé"}}</a></th>
+                        <!-- <th scope="col" class="px-6 py-3"><span class="sr-only">Remove</span></th> -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let manager of promoManager.resp" class="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
+                        <th scope="col" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            {{manager.staff.user.lastname}} {{manager.staff.user.name}}
+                        </th>
+                        <td class="px-6 py-4 text-right"></td>
+                        <td class="px-6 py-4 text-right"></td>
+                        <td class="px-6 py-4 text-right"><a (click)="ouvrirModalDelete({id_resp:manager.id, id_promo:promoManager.promo.id})" class="font-medium text-red-600 dark:text-red-500 hover:underline">Supprimer</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

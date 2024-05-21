@@ -1,0 +1,77 @@
+<div class="m-5">
+    <div class="maxW">
+        <form [formGroup]="formAddPromo">
+            <div class="mb-5">
+                <label for="filiere" class="block mb-2 text-sm font-medium text-white">Filière</label>
+                <select formControlName="filiere" id="filiere" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                    <option *ngFor="let filiere of ['INFO', 'INFOCOM', 'GACO', 'QLIO']">{{ filiere }}</option>
+                </select>
+            </div>
+            <div class="mb-5">
+                <label for="niveau" class="block mb-2 text-sm font-medium text-white">Niveau (numéro du semestre)</label>
+                <select formControlName="niveau" id="niveau" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+                    <option *ngFor="let number of [1, 2, 3, 4, 5, 6]">{{ number }}</option>
+                </select>
+            </div>
+            <div>
+                <label for="annee" class="block mb-2 text-sm font-medium text-white">Année scolaire de la promotion</label>
+                <input formControlName="annee" type="number" id="annee"  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
+            </div>
+        </form>
+    </div>
+    
+    <div class="maxW my-auto" >
+        <label class="block mb-2 text-sm font-medium text-white">Choisissez un enseignant responsable</label>
+        <div class="relative">
+            <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                <svg class="w-4 h-4 text-gray-700 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                </svg>
+            </div>
+        <input type="search" name="search" [(ngModel)]="searchText" autocomplete="off" class="mb-4 block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Nom" required>
+        </div>
+        <div class="mt-5 relative overflow-x-auto shadow-md sm:rounded-lg">
+            <table class="w-full text-sm text-left rtl:text-right text-gray-700 dark:text-gray-400">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                        <th scope="col" class="px-6 py-3">Professeur</th>
+                        <th scope="col" class="px-6 py-3">prenom</th>
+                        <th *ngIf="!aProfIsSelected" scope="col" class="px-6 py-3"></th>
+                    </tr>
+                </thead>
+                <tbody *ngIf="!aProfIsSelected">
+                    <tr *ngFor="let prof of profs | filter:searchText" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                        <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">{{prof.staff.user.lastname}}</th>
+                        <td class="px-6 py-4">{{prof.staff.user.name}}</td>
+                        <td class="px-6 py-4"> <button class="px-3 py-2 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" (click)="selectProf(prof)">Choisir</button></td>
+                    </tr>
+                </tbody>
+                <tbody *ngIf="aProfIsSelected && this.profSelected">
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                        <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">{{this.profSelected.staff.user.lastname}}</th>
+                        <td class="px-6 py-4">{{this.profSelected.staff.user.name}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div id="alert-additional-content-4" class="maxW mt-4 p-4 mb-4 text-yellow-800 border border-yellow-300 rounded-lg bg-yellow-50 dark:bg-gray-800 dark:text-yellow-300 dark:border-yellow-800" role="alert" *ngIf="this.profSelected">
+        <div class="flex items-center">
+            <svg class="flex-shrink-0 w-4 h-4 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+            </svg>
+            <span class="sr-only">Info</span>
+            <h3 class="text-lg font-medium">
+                Voulez vous vraiment ajouté la promotion {{this.promotionName}} avec {{this.profSelected.staff.user.name}} {{this.profSelected.staff.user.lastname}} comme enseignant responsable ?
+            </h3>
+        </div>
+        <div class="flex mt-4">
+            <button type="button" mat-dialog-close (click)="addPromo()" class="text-white bg-yellow-800 hover:bg-yellow-900 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-xs px-3 py-1.5 me-2 text-center inline-flex items-center dark:bg-yellow-300 dark:text-gray-800 dark:hover:bg-yellow-400 dark:focus:ring-yellow-800">
+                Ajouter
+            </button>
+            <button type="button" class="text-yellow-800 bg-transparent border border-yellow-800 hover:bg-yellow-900 hover:text-white focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-xs px-3 py-1.5 text-center dark:hover:bg-yellow-300 dark:border-yellow-300 dark:text-yellow-300 dark:hover:text-gray-800 dark:focus:ring-yellow-800" data-dismiss-target="#alert-additional-content-4" (click)="clear()" aria-label="Close">
+                Annuler
+            </button>
+        </div>
+    </div>
+</div>

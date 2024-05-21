@@ -1,0 +1,45 @@
+<form [formGroup]="formChangePasswd" (ngSubmit)="onSubmit()"  class="max-w-sm mx-auto p-10 w-96">
+    <div class="mb-5">
+        <label for="oldPasswd" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Ancient mot de passe</label>
+        <input formControlName="oldPasswd" [type]="password" id="oldPasswd" (blur)="onEnterOld($event)"
+        class="bg-gray-50 border  text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700  dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+        [ngClass]="{'border-gray-300 dark:border-gray-600':goodOldPass, 'border-red-600 dark:border-red-700':!goodOldPass}"
+        required>
+        <p *ngIf="!goodOldPass" class="mt-2 text-sm text-red-600 dark:text-red-500">Mot de passe incorrect</p>
+    </div>
+
+    <div class="mb-5">
+        <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nouveau mot de passe</label>
+        <input formControlName="newPasswd" [type]="password" id="password" (blur)="onEnterNew()"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+        [ngClass]="{'border-gray-300 dark:border-gray-600':goodNewPass, 'border-red-600 dark:border-red-700':!goodNewPass}"
+        required>
+        <p *ngIf="!goodNewPass" class="mt-2 text-sm text-red-600 dark:text-red-500">Le nouveau mdp doit être différent de l'ancien</p>
+        <div *ngIf="!newMdpAllGood()" class="border border-gray-300 dark:border-gray-600 rounded-lg mt-2 bg-gray-200 dark:bg-gray-800 p-2">
+            <p *ngIf="!hasRequiredLenght()" class="mt-2 text-sm text-red-600 dark:text-red-500">La taille du mdp foit être superieur à 12</p>
+            <p *ngIf="!hasNumber()" class="mt-2 text-sm text-red-600 dark:text-red-500">Le mdp doit contenir au moins un chiffre</p>
+            <p *ngIf="!hasSpecialCharacter()" class="mt-2 text-sm text-red-600 dark:text-red-500">Le mdp doit contenir au moins un charachtère spécial</p>
+            <p *ngIf="!hasUppercase()" class="mt-2 text-sm text-red-600 dark:text-red-500">Le mdp doit contenir au moins une majuscule</p>
+        </div>
+    </div>
+
+    <div class="mb-5">
+        <label for="passwordd" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirmer nouveau mot de passe</label>
+        <input formControlName="rptNewPasswd" [type]="password" id="passwordd" (blur)="onEnterRepeat()"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+        [ngClass]="{'border-gray-300 dark:border-gray-600':goodRptNewPass, 'border-red-600 dark:border-red-700':!goodRptNewPass}"
+        required>
+        <p *ngIf="!goodRptNewPass" class="mt-2 text-sm text-red-600 dark:text-red-500">Les mots de passe sont différents</p>
+    </div>
+    
+    <div class="flex items-start my-5">
+        <div class="flex items-center h-5">
+          <input (click)="onClick()" id="remember" type="checkbox" value="" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" required>
+        </div>
+        <label for="remember" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Afficher les mots de passe</label>
+    </div>
+    
+    <button *ngIf="!allGood()" type="button" class="text-white bg-blue-400 dark:bg-blue-500 cursor-not-allowed font-medium rounded-lg text-sm px-5 py-2.5 text-center" disabled>Changer de mot de passe</button>
+
+    <button *ngIf="allGood()" type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Changer de mot de passe</button>
+</form>

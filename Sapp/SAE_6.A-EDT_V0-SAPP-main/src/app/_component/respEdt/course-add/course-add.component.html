@@ -1,0 +1,77 @@
+
+<div id="add-event-modal" tabindex="-1" aria-hidden="true"
+    class="modal fixed top-0 left-0 z-50  w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full flex justify-center bg-gray-900 bg-opacity-50">
+    <div class="relative w-full max-w-md max-h-full">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <button type="button" (click)="closeModalAdd()"
+                class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" 
+                data-modal-hide="add-event-modal">
+                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                </svg>
+                <span class="sr-only">Fermer le modal</span>
+            </button>
+            <div class="px-6 py-6 lg:px-8">
+                <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-white">Ajouter un cours</h3>
+                <form class="space-y-6" [formGroup]="courseForm" (ngSubmit)="onSubmit() ">
+                    <div>
+                        <label for="initial_ressource" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Ressource</label>
+                        <select name="initial_ressource" formControlName="initial_ressource" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            <option selected="" disabled="" value="">Choisir...</option>
+                            <option *ngFor="let cours of resources" [value]="cours.initial">{{ cours.name }}</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="name_salle" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Salle</label>
+                        <select name="name_salle" formControlName="name_salle" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            <option selected="" value="">Aucune</option>
+                            <option *ngFor="let salle of salles" [value]="salle.nom" >{{ salle.nom }}</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="id_enseignant" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Professeur</label>
+                        <select name="id_enseignant" formControlName="id_enseignant" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            <option selected="" value="">Aucun(e)</option>
+                            <option *ngFor="let professeur of teachers" [value]="professeur.id" >{{ professeur.staff.user.username }}</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="id_group" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Groupe</label>
+                        <select name="id_group" formControlName="id_group" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            <option selected="" disabled="" value="">Choisir...</option>
+                            <option *ngFor="let groupe of groupes" [value]="groupe.id" >{{ groupe.name }}</option>
+                        </select>
+                    </div>
+                    <div class="relative">
+                        <input type="checkbox" name="evaluation" formControlName="evaluation" class="hidden" #EvaluationCheckbox> 
+                        <button type="button" (click)="toggleEvaluation()"
+                            class="w-full text-white focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                            [ngClass]="{
+                                ' bg-blue-700 hover:bg-blue-800 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800': EvaluationCheckbox.checked, 
+                                ' bg-gray-700 hover:bg-gray-800 focus:ring-gray-300 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800': !EvaluationCheckbox.checked, 
+                            }">
+                            Contrôle
+                            <div *ngIf="EvaluationCheckbox.checked " class="absolute right-2 top-1/2 transform -translate-y-1/2">
+                            <svg width="30" height="30" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11.4669 3.72684C11.7558 3.91574 11.8369 4.30308 11.648 4.59198L7.39799 11.092C7.29783 11.2452 7.13556 11.3467 6.95402 11.3699C6.77247 11.3931 6.58989 11.3355 6.45446 11.2124L3.70446 8.71241C3.44905 8.48022 3.43023 8.08494 3.66242 7.82953C3.89461 7.57412 4.28989 7.55529 4.5453 7.78749L6.75292 9.79441L10.6018 3.90792C10.7907 3.61902 11.178 3.53795 11.4669 3.72684Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+                            </div>    
+                        </button>
+                    </div>
+                    <div>
+                        <label for="date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Sélectionner une date</label>
+                        <input type="date" name="date" id="date" formControlName="date" required class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
+                    </div>
+                    <div>
+                        <label for="start" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Commence à</label>
+                        <input type="time" name="start" id="start" formControlName="start" required class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
+                    </div>
+                    <div>
+                        <label for="end" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fini à</label>
+                        <input type="time" name="end" id="end" formControlName="end" required class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
+                    </div>
+                    <button [disabled]="courseForm.invalid" type="submit" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Confirmer</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div> 

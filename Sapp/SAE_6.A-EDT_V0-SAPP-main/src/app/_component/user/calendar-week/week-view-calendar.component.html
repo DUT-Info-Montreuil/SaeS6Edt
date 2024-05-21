@@ -1,0 +1,192 @@
+<div id="calendar-container">
+    <div id="cal-buttons">
+        <div id="cal-date-nav-buttons" class="flex justify-between">
+            <div>
+                <button id="previous" mwlCalendarPreviousView [(viewDate)]="viewDate" [view]="view" [excludeDays]="[0, 6]" (click)="loadEvents()"
+                class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l ml-5 mt-5 mb-5"
+                >Précédent</button>
+                    
+                <button id="today" mwlCalendarToday [(viewDate)]="viewDate" (click)="loadEvents()"
+                class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 mt-5 mb-5"
+                >Aujourd'hui</button>
+                <button id="next" mwlCalendarNextView [(viewDate)]="viewDate" [view]="view" [excludeDays]="[0, 6]" (click)="loadEvents()"
+                class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r mt-5 mb-5"
+                >Prochain</button>
+            </div>
+
+            <div *ngIf="viewPhone" class="flex flex-row items-center pe-5">
+              <button class="relative" (click)="checkAccount.checked = !checkAccount.checked">
+                  <input type="checkbox" class="hidden" #checkAccount >
+                  <div class="flex flex-row items-center text-white gap-1">
+                      <svg width="25" height="25" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.5 0.875C5.49797 0.875 3.875 2.49797 3.875 4.5C3.875 6.15288 4.98124 7.54738 6.49373 7.98351C5.2997 8.12901 4.27557 8.55134 3.50407 9.31167C2.52216 10.2794 2.02502 11.72 2.02502 13.5999C2.02502 13.8623 2.23769 14.0749 2.50002 14.0749C2.76236 14.0749 2.97502 13.8623 2.97502 13.5999C2.97502 11.8799 3.42786 10.7206 4.17091 9.9883C4.91536 9.25463 6.02674 8.87499 7.49995 8.87499C8.97317 8.87499 10.0846 9.25463 10.8291 9.98831C11.5721 10.7206 12.025 11.8799 12.025 13.5999C12.025 13.8623 12.2376 14.0749 12.5 14.0749C12.7623 14.075 12.975 13.8623 12.975 13.6C12.975 11.72 12.4778 10.2794 11.4959 9.31166C10.7244 8.55135 9.70025 8.12903 8.50625 7.98352C10.0187 7.5474 11.125 6.15289 11.125 4.5C11.125 2.49797 9.50203 0.875 7.5 0.875ZM4.825 4.5C4.825 3.02264 6.02264 1.825 7.5 1.825C8.97736 1.825 10.175 3.02264 10.175 4.5C10.175 5.97736 8.97736 7.175 7.5 7.175C6.02264 7.175 4.825 5.97736 4.825 4.5Z" fill="white" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+                      <span>{{user.username}}</span>
+                      <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 6H11L7.5 10.5L4 6Z" fill="white"></path></svg>
+                  </div>
+                  <div class="absolute bottom-0 translate-y-full right-0 bg-gray-400 w-52 flex flex-col gap-4 pt-4 z-10 rounded-b-lg justify-center items-center rounded-t-md" [ngClass]="{'hidden':!checkAccount.checked}">
+                      <div class="font-bold w-4/5 overflow-hidden text-ellipsis">
+                      <h1 class="text-xl  whitespace-nowrap text-ellipsis max-w-full">{{user.name}} {{user.lastname}}</h1>
+                      <h1 class="text-lg italic font-normal">Étudiant</h1>
+                      </div>
+                      <button class="w-full bg-[#082841] hover:bg-[#3a5b74] text-white p-3 font-bold " (click)="openModalPasswd()">Changer mot de passe</button>
+                      <button class="w-full bg-[#082841] hover:bg-[#3a5b74] rounded-b-lg text-white p-3 font-bold " (click)="redirectToLogout($event)">Déconnexion</button>
+                  </div>
+              </button>
+            </div>
+        </div>
+        <div *ngIf="viewPhone" class="ml-5 mb-5 flex gap-5">
+          <div class="relative">
+            <select class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded w-52" (change)="filterByPromo($event)" #selectPromo>
+                <option selected="" disabled="" value="">Promotion</option>
+                <option *ngFor="let promo of promos" [value]="promo.id">{{promo.group.name}}</option>
+            </select>
+            <button *ngIf="selectPromo.value != ''"  class="absolute right-0 h-full bg-[#051D32] hover:bg-[#33516d] rounded-s-sm" (click)="removeFilter('group',selectPromo)">
+              <svg width="25" height="25" viewBox="0 0 15 15" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M11.7816 4.03157C12.0062 3.80702 12.0062 3.44295 11.7816 3.2184C11.5571 2.99385 11.193 2.99385 10.9685 3.2184L7.50005 6.68682L4.03164 3.2184C3.80708 2.99385 3.44301 2.99385 3.21846 3.2184C2.99391 3.44295 2.99391 3.80702 3.21846 4.03157L6.68688 7.49999L3.21846 10.9684C2.99391 11.193 2.99391 11.557 3.21846 11.7816C3.44301 12.0061 3.80708 12.0061 4.03164 11.7816L7.50005 8.31316L10.9685 11.7816C11.193 12.0061 11.5571 12.0061 11.7816 11.7816C12.0062 11.557 12.0062 11.193 11.7816 10.9684L8.31322 7.49999L11.7816 4.03157Z" fill="white" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+            </button>
+          </div>
+          <div class="relative">
+            <select class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded w-52" (change)="filterByTeacher($event)" #selectTeacher>
+              <option selected="" disabled="" value="">Professeur</option>
+              <option *ngFor="let professeur of teachers" [value]="professeur.id" >{{ professeur.staff.initial }} - {{professeur.staff.user.name }} {{professeur.staff.user.lastname}}</option>
+            </select>
+            <button *ngIf="selectTeacher.value"  class="absolute right-0 h-full bg-[#051D32] hover:bg-[#33516d] rounded-s-sm" (click)="removeFilter('teacher',selectTeacher)">
+              <svg width="25" height="25" viewBox="0 0 15 15" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M11.7816 4.03157C12.0062 3.80702 12.0062 3.44295 11.7816 3.2184C11.5571 2.99385 11.193 2.99385 10.9685 3.2184L7.50005 6.68682L4.03164 3.2184C3.80708 2.99385 3.44301 2.99385 3.21846 3.2184C2.99391 3.44295 2.99391 3.80702 3.21846 4.03157L6.68688 7.49999L3.21846 10.9684C2.99391 11.193 2.99391 11.557 3.21846 11.7816C3.44301 12.0061 3.80708 12.0061 4.03164 11.7816L7.50005 8.31316L10.9685 11.7816C11.193 12.0061 11.5571 12.0061 11.7816 11.7816C12.0062 11.557 12.0062 11.193 11.7816 10.9684L8.31322 7.49999L11.7816 4.03157Z" fill="white" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+            </button>
+          </div>
+
+          <div class="relative">
+
+            <select class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded w-52" (change)="filterByRoom($event)" #selectRoom>
+              <option selected="" disabled="" value="">Salle</option>
+              <option *ngFor="let salle of salles" [value]="salle.nom" >{{ salle.nom }}</option>
+            </select>
+            <button *ngIf="selectRoom.value" class="absolute right-0 h-full bg-[#051D32] hover:bg-[#33516d] rounded-s-sm" (click)="removeFilter('room',selectRoom)">
+              <svg width="25" height="25" viewBox="0 0 15 15" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M11.7816 4.03157C12.0062 3.80702 12.0062 3.44295 11.7816 3.2184C11.5571 2.99385 11.193 2.99385 10.9685 3.2184L7.50005 6.68682L4.03164 3.2184C3.80708 2.99385 3.44301 2.99385 3.21846 3.2184C2.99391 3.44295 2.99391 3.80702 3.21846 4.03157L6.68688 7.49999L3.21846 10.9684C2.99391 11.193 2.99391 11.557 3.21846 11.7816C3.44301 12.0061 3.80708 12.0061 4.03164 11.7816L7.50005 8.31316L10.9685 11.7816C11.193 12.0061 11.5571 12.0061 11.7816 11.7816C12.0062 11.557 12.0062 11.193 11.7816 10.9684L8.31322 7.49999L11.7816 4.03157Z" fill="white" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+            </button>
+          </div>
+
+          
+        </div>
+
+        <div *ngIf="!viewPhone">
+          <!-- drawer init and toggle -->
+          <div class="text-left">
+            <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded ml-5 mb-5" type="button" data-drawer-target="drawer-example" data-drawer-show="drawer-example" aria-controls="drawer-example" (click)="toggleDrawer()">
+            Utilitaires
+            </button>
+          </div>
+
+          <!-- drawer component -->
+          <div id="drawer-example" [class]="'fixed top-0 left-0 z-40 h-screen p-4 overflow-y-auto transition-transform ' + (isDrawerOpen ? '' : '-translate-x-full') + ' bg-sky-50 w-80 dark:bg-slate-950'" tabindex="-1" aria-labelledby="drawer-label">
+            <h5 id="drawer-label" class="inline-flex items-center mb-4 text-base font-semibold text-gray-500 dark:text-gray-400">Filtres</h5>
+            <button (click)="toggleDrawer()" type="button" data-drawer-hide="drawer-example" aria-controls="drawer-example" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 absolute top-2.5 end-2.5 flex items-center justify-center dark:hover:bg-gray-600 dark:hover:text-white" >
+              <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+              </svg>
+              <span class="sr-only">Close menu</span>
+            </button>
+            <div class="relative mb-8">
+              <select class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded w-64" (change)="filterByPromo($event)" #selectPromo>
+                  <option selected="" disabled="" value="">Promotion</option>
+                  <option *ngFor="let promo of promos" [value]="promo.id">{{promo.group.name}}</option>
+              </select>
+              <button *ngIf="selectPromo.value != ''"  class="absolute right-0 h-full bg-red-600 rounded-s-sm" (click)="removeFilter('group',selectPromo)">
+                <svg width="25" height="25" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11.7816 4.03157C12.0062 3.80702 12.0062 3.44295 11.7816 3.2184C11.5571 2.99385 11.193 2.99385 10.9685 3.2184L7.50005 6.68682L4.03164 3.2184C3.80708 2.99385 3.44301 2.99385 3.21846 3.2184C2.99391 3.44295 2.99391 3.80702 3.21846 4.03157L6.68688 7.49999L3.21846 10.9684C2.99391 11.193 2.99391 11.557 3.21846 11.7816C3.44301 12.0061 3.80708 12.0061 4.03164 11.7816L7.50005 8.31316L10.9685 11.7816C11.193 12.0061 11.5571 12.0061 11.7816 11.7816C12.0062 11.557 12.0062 11.193 11.7816 10.9684L8.31322 7.49999L11.7816 4.03157Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+              </button>
+            </div>
+  
+            <div class="relative mb-8">
+  
+              <select class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded w-64" (change)="filterByTeacher($event)" #selectTeacher>
+                <option selected="" disabled="" value="">Professeur</option>
+                <option *ngFor="let professeur of teachers" [value]="professeur.id" >{{ professeur.staff.initial }} - {{professeur.staff.user.name }} {{professeur.staff.user.lastname}}</option>
+              </select>
+              <button *ngIf="selectTeacher.value"  class="absolute right-0 h-full bg-red-600 rounded-s-sm" (click)="removeFilter('teacher',selectTeacher)">
+                <svg width="25" height="25" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11.7816 4.03157C12.0062 3.80702 12.0062 3.44295 11.7816 3.2184C11.5571 2.99385 11.193 2.99385 10.9685 3.2184L7.50005 6.68682L4.03164 3.2184C3.80708 2.99385 3.44301 2.99385 3.21846 3.2184C2.99391 3.44295 2.99391 3.80702 3.21846 4.03157L6.68688 7.49999L3.21846 10.9684C2.99391 11.193 2.99391 11.557 3.21846 11.7816C3.44301 12.0061 3.80708 12.0061 4.03164 11.7816L7.50005 8.31316L10.9685 11.7816C11.193 12.0061 11.5571 12.0061 11.7816 11.7816C12.0062 11.557 12.0062 11.193 11.7816 10.9684L8.31322 7.49999L11.7816 4.03157Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+              </button>
+            </div>
+  
+            <div class="relative mb-8">
+  
+              <select class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded w-64" (change)="filterByRoom($event)" #selectRoom>
+                <option selected="" disabled="" value="">Salle</option>
+                <option *ngFor="let salle of salles" [value]="salle.nom" >{{ salle.nom }}</option>
+              </select>
+              <button *ngIf="selectRoom.value" class="absolute right-0 h-full bg-red-600 rounded-s-sm" (click)="removeFilter('room',selectRoom)">
+                <svg width="25" height="25" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11.7816 4.03157C12.0062 3.80702 12.0062 3.44295 11.7816 3.2184C11.5571 2.99385 11.193 2.99385 10.9685 3.2184L7.50005 6.68682L4.03164 3.2184C3.80708 2.99385 3.44301 2.99385 3.21846 3.2184C2.99391 3.44295 2.99391 3.80702 3.21846 4.03157L6.68688 7.49999L3.21846 10.9684C2.99391 11.193 2.99391 11.557 3.21846 11.7816C3.44301 12.0061 3.80708 12.0061 4.03164 11.7816L7.50005 8.31316L10.9685 11.7816C11.193 12.0061 11.5571 12.0061 11.7816 11.7816C12.0062 11.557 12.0062 11.193 11.7816 10.9684L8.31322 7.49999L11.7816 4.03157Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+              </button>
+            </div>  
+
+            <h5 id="drawer-label" class="inline-flex items-center mb-4 text-base font-semibold text-gray-500 dark:text-gray-400">Compte</h5><br>
+            <button class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700" (click)="redirectToLogout($event)">Déconnexion</button>
+          </div>
+
+        </div>
+        
+    </div>
+    <mwl-calendar-week-view *ngIf="isWeekCalendar"
+        [viewDate]="viewDate"
+        class="week-view" 
+        [events]="events"
+        [excludeDays]="[0, 6]"
+        locale="fr"
+        [dayStartHour]="8"
+        [dayEndHour]="18"
+        [refresh] = "refresh"
+        (dayHeaderClicked)="changeViewDay($event)"
+        [eventTitleTemplate]="customeWeekViewTemplate"> 
+    ></mwl-calendar-week-view>
+
+
+
+    <div *ngIf="!isWeekCalendar"  class="w-full text-center bg-white p-1 text-black hover:bg-gray-200 ps-[70px]" (click)="toggleWeekCalendar()">
+      <h2 class="font-bold">{{ viewDate | date:'EEEE' | lowercase }}</h2>
+      <h2 class="text-gray-500">{{ viewDate | date:'d MMM' | lowercase }}</h2>
+  </div>
+  <mwl-calendar-day-view *ngIf="!isWeekCalendar"
+    [viewDate]="viewDate"
+
+
+    class="week-view" 
+    [events]="events"
+    locale="fr"
+    [dayStartHour]="8"
+    [dayEndHour]="18"
+    (eventClicked)="eventClicked($event)"
+    (eventTimesChanged)="eventTimesChanged($event)"
+    [refresh] = "refresh"
+
+
+    [eventTitleTemplate]="customeWeekViewTemplate"
+
+    ></mwl-calendar-day-view>
+
+    <ng-template #customeWeekViewTemplate let-event="event">
+        <div class="titre h-full flex flex-col justify-between relative text-white">
+          <div class="item-center text-center">
+            <!-- Votre contenu principal ici -->
+            <div class="flex flex-row">
+                <div class="flex-1 text-start">{{getCourseByEventId(event.id)!.name_salle}}</div>
+                <div class="flex-1 text-center">
+                {{ getRessourceNameByInitial(getCourseByEventId(event.id)!.initial_ressource) }}
+                </div>
+                <div class="flex-1 text-end">{{ getInitialTeacher(event.id) }}</div>
+            </div>
+          </div>
+
+          <div *ngIf="getCourseByEventId(event.id)!.evaluation" class="flex items-center w-full justify-center">
+            <div class="text-center border-2 px-3 border-red-700 rounded-lg text-red-800">
+
+            CONTRÔLE
+            </div>
+        </div>
+          
+          <!-- Footer dans la ng-template -->
+          <div class="flex flex-row items-center justify-center">
+            <img src="assets/images/clock.png" alt="Logo" class="w-[18px]" >
+            <h2>{{ getTimeString(getCourseByEventId(event.id)!.start_time) }} - {{ getTimeString(getCourseByEventId(event.id)!.end_time) }} </h2>
+          </div>
+          
+        </div>
+
+      </ng-template>
+</div>

@@ -1,0 +1,11 @@
+<button class="border border-blue-400  p-3 w-full" type="button" (click)="clickOnGroupAvailable(group)" [disabled]="!group.available && !group.selected"
+    [class.bg-blue-600]="group.available"
+    [class.hover:bg-blue-400]="group.available"
+    [class.bg-blue-300]="group.selected">
+    {{group.group.name}}
+</button>
+<div *ngIf="group.children.length != 0" class="flex flex-row" >
+    <div *ngFor="let child of group.children" class="flex-1 text-center text-white">
+        <course-duplicate-show [group]="getGroupAvailable(child)!" [group_available]="group_available" (updateGroup)="updateGroupAvailable($event)" ></course-duplicate-show>
+    </div>
+</div>

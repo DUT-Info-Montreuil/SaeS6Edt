@@ -1,0 +1,58 @@
+<div class="p-4 md:p-5 space-y-4">
+    <h5 class="mb-2 text-2xl font-bold tracking-tight text-white">{{elementName}}</h5>
+    <form *ngIf="formSelectionne === 'formSalle'" [formGroup]="formModifSalle" (ngSubmit)="onSubmitModifSalle()" >
+        <label for="ordi" class="mt-5 block mb-2 text-sm font-medium text-white">nombre d'ordinateurs</label>
+        <input formControlName="ordi" type="number" id="ordi" required class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+        <label for="videoProjecteur" class="mt-5 block mb-2 text-sm font-medium text-white">nombre de videos projecteurs</label>
+        <input formControlName="videoProjecteur" type="number" id="videoProjecteur" required class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+        <label for="tableauNumerique" class="mt-5 block mb-2 text-sm font-medium text-white">nombre de tableaux numériques</label>
+        <input formControlName="tableauNumerique" type="number" id="tableauNumerique" required class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+        <button type="submit" mat-dialog-close class="mt-5 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Modifier</button>
+        <button mat-dialog-close type="button" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Annuler</button>
+    </form>
+    <form *ngIf="formSelectionne === 'formProfesseur'" [formGroup]="formModifProfesseur" (ngSubmit)="onSubmitModifProfesseur()">
+        <input type="number" id="disabled-input-2" aria-label="disabled input 2" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" [value]="getElementId()" disabled readonly>
+        <label for="lastname" class="block mb-2 text-sm font-medium text-white">Nom</label>
+        <input formControlName="lastname" required type="text" id="lastname" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+        <label for="name" class="mt-5 block mb-2 text-sm font-medium text-white">Prénom</label>
+        <input formControlName="name" required type="text" id="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+        <button type="submit" mat-dialog-close class="mt-5 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Modifier</button>
+        <button mat-dialog-close type="button" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Annuler</button>
+    </form>
+    <form *ngIf="formSelectionne === 'formResponsable'" [formGroup]="formModifResponsable" (ngSubmit)="onSubmitModifResponsable()">
+        <input type="number" id="disabled-input-2" aria-label="disabled input 2" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" [value]="getElementId()" disabled readonly>
+        <label for="lastname" class="block mb-2 text-sm font-medium text-white">Nom</label>
+        <input formControlName="lastname" required type="text" id="lastname" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+        <label for="name" class="mt-5 block mb-2 text-sm font-medium text-white">Prénom</label>
+        <input formControlName="name" required type="text" id="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+        <button type="submit" mat-dialog-close class="mt-5 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Modifier</button>
+        <button mat-dialog-close type="button" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Annuler</button>
+    </form>
+    <form [formGroup]="formModifRessource" (ngSubmit)="onSubmitModifRessource()"
+    *ngIf="formSelectionne === 'formRessource'">
+        <label for="nonamem" class="block mb-2 text-sm font-medium text-white">Nom</label>
+        <input required formControlName="name" type="text" id="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+        <label for="choixPromo" class="mt-5 block mb-2 text-sm font-medium text-white">Promo</label>
+        <select required formControlName="id_promo" id="id_promo" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <option *ngFor="let promo of promos" [value]="promo.id">{{promo.group.name}}</option>
+        </select>
+        <button mat-dialog-close type="submit"  class="mt-5 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Modifier</button>
+        <button mat-dialog-close type="button" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Annuler</button>
+    </form>
+    <form *ngIf="formSelectionne === 'formEleve'" [formGroup]="formModifStudent" (ngSubmit)="onSubmitModifEleve()">
+        <label for="disabled-input-2" class="block mb-2 text-sm font-medium text-white">ID</label>
+        <input type="number" id="disabled-input-2" aria-label="disabled input 2" class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" [value]="getElementId()" disabled readonly>
+        <label for="lastname" class="mt-5 block mb-2 text-sm font-medium text-white">Nom</label>
+        <input formControlName="lastname" required type="text" id="lastname" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+        <label for="name" class="mt-5 block mb-2 text-sm font-medium text-white">Prénom</label>
+        <input formControlName="name" required type="text" id="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+        <button type="submit" mat-dialog-close class="mt-5 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Modifier</button>
+        <button mat-dialog-close type="button" class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Annuler</button>
+    </form>
+    <div *ngIf="formSelectionne === 'formPromo'" class="flex flex-col gap-5">
+        <div *ngFor="let resp of data.element.resp" class="flex flex-col justify-between items-center text-sm text-gray-200">
+            <h1 class="flex-1"> {{resp.staff.user.lastname}} {{resp.staff.user.name}}</h1>
+            <button class="rounded-md bg-blue-500 p-1 flex-1 w-4/5" (click)="addAffiliation(resp)">Ajouter</button>
+        <div>
+    </div>
+</div>

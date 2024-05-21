@@ -1,0 +1,52 @@
+<div  class="mx-10 mt-5">
+    <button (click)="redirectToEdt()" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded mr-10 mt-2 mb-2">Retour à l'emploi du temps</button>
+    <label for="promo" class="text-xl text-center block mb-4 font-medium text-gray-900 dark:text-white">Promotion</label>
+    <select required id="niveau" (change)="changerPromo($event)" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+        <option selected="" disabled="" value="">Choisir...</option>
+        <option *ngFor="let promo of promos; let i = index" [value]="promo.id" >
+            {{ promo.group.name }}
+        </option>          
+    </select>
+    <button *ngIf="idPromoSelectionnee" type="button" (click)="ouvrirModalAjoutEleve()" class="mt-5 text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 me-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700" >Ajouter un(e) élève(e)</button>
+
+    <button *ngIf="idPromoSelectionnee" type="button" (click)="ouvrirModalCSV()" class="mt-5 text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 me-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700" >Ajouter élèves via un fichier csv</button>
+    <div *ngIf="idPromoSelectionnee">
+        <button type="button" (click)="toggleModalMigrate()" class="w-full mt-5 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Migrer la promotion</button>
+
+        <app-add-modal-promo (migrate)="migrate($event)" [hidden]="!showModalMigrate"></app-add-modal-promo>
+
+        <div *ngFor="let key of groupesKeys; let i = index" class="mt-5 w-full p-4 text-center bg-stone-100 border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-slate-900 dark:border-gray-700">
+            <h5 class="text-3xl text-center block mb-4 font-medium text-gray-900 dark:text-white">{{ key.name }}</h5>
+            <div class="grid grid-cols-2 gap-4 mt-5">
+                <div *ngFor="let value of groupesValues[i]; let j = index" class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        <caption class="pt-2 pb-2 text-center text-lg font-semibold rtl:text-right text-gray-900 bg-white dark:text-white dark:bg-gray-800">
+                            {{ value.name }}
+                        </caption>
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            <tr>
+                                <th scope="col" class="px-3 py-3">Nom</th>
+                                <th scope="col" class="px-3 py-3">Prénom</th>
+                                <th scope="col" class="px-3 py-3">Changer de groupe</th>
+                                <th scope="col" class="px-3 py-3">Modifier élève</th>
+                                <th scope="col" class="px-3 py-3">Supprimer élève</th>
+                            </tr>
+                        </thead>
+                        <tbody *ngFor="let eleve of eleve_groupes.get(value); let isLast=last">
+                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700" *ngIf="eleve">
+                                <th scope="row" class="px-3 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{eleve.name | uppercase}}</th>
+                                <td class="px-3 py-4">{{eleve.lastname}}</td>
+                                <td class="px-3 py-4">
+                                    <button type="button" (click)="ouvrirModalModifGroupe(eleve, value)" class="px-3 py-2 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Modifier</button>
+                                </td>
+                                <td class="px-3 py-4"><a (click)="ouvrirModalModif(eleve.id_student)" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Modifier</a></td>
+                                <td class="px-3 py-4"><a (click)="ouvrirModalDelete(eleve.id_student)" class="font-medium text-red-600 dark:text-red-500 hover:underline">Supprimer</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

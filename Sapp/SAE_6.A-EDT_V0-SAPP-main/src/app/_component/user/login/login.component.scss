@@ -1,0 +1,221 @@
+@media screen and (max-width: 310px) {
+    .login{
+        font-size: small;
+    }
+}
+
+//taille telephone et en dessous
+@media screen and (max-width: 767px) {
+    .login{
+        width: 100%;
+        text-align: center;
+    }
+
+    .content{
+        width: 100%;
+        margin: auto;
+    }
+
+    #logoModeClair{
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 50%;
+    }
+
+    #logoModeSombre{
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 50%;
+    }
+
+    #connecter{
+        font-size: large;
+    }
+
+    #art{
+        display: none;
+    }
+
+    .image{
+        display: none;
+    }
+
+    .textinput {
+        margin-top: 5%;
+        position: relative;
+        width: 75%;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    
+}
+
+//au dessus de la taille telephone
+@media screen and (min-width: 767px) {
+    #logoModeClair{ width: 75%; }
+
+    #logoModeSombre{ width: 75%; }
+
+    .login{
+        float: left;
+        width: 50%;
+        padding-left: 8%;
+    }
+
+    .image{
+        width: 50%;
+        display: flex;
+        padding-top: 1%;
+        margin: auto;
+        height: 98%;
+    }
+
+    .textinput {
+        margin-top: 5%;
+        position: relative;
+        width: 75%;
+        display: block;
+    }
+
+    #connecter{
+        font-size: 1vw;
+    }
+
+    #id, #welcome{
+        font-size: 1.2vw;
+    }
+
+    .input{
+        font-size: 1vw;
+    }
+
+    .label{
+        font-size: 1vw;
+    }
+}
+
+//peut importe l'écran
+.image{
+    padding-right: 10px;
+}
+
+.login{
+    margin: auto;
+    display: flex;
+    height: 98%;
+}
+
+.content{
+    margin: auto;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+#art{
+    margin: auto;
+    max-width: 100%;
+    max-height: 100%;
+}
+  
+.input {
+    border: none;
+    margin: 0;
+    padding: 10px 0;
+    outline: none;
+    border-bottom: solid 1px #8692A6;
+    margin-top: 12px;
+    width: 100%;
+    background-color: #ffffff00;
+    -webkit-tap-highlight-color: transparent;
+}
+  
+.label {
+    position: absolute;
+    left: 0;
+    top: 22px;
+    transition: 0.2s cubic-bezier(0, 0, 0.3, 1);
+    pointer-events: none;
+    user-select: none;
+}
+  
+.line {
+    height: 2px;
+    position: absolute;
+    transform: translateX(-50%);
+    left: 50%;
+    bottom: 0;
+    width: 0;
+    transition: 0.2s cubic-bezier(0, 0, 0.3, 1);
+}
+  
+.input:focus ~ .line, .input:valid ~ .line {
+    width: 100%;
+}
+  
+.input:focus ~ .label, .input:valid ~ .label {
+    font-size: 11px;
+    top: 0;
+}
+
+@media (prefers-color-scheme: dark){
+    #welcome {
+        color: #8692A6;
+    }
+    #id{
+        color: #8692A6;
+    }
+    #logoModeClair{
+        display: none;
+    }
+    .input:focus ~ .label, .input:valid ~ .label {
+        color: #ffffff;
+    }
+    .line{
+        background-color: #ffffff;
+    }
+    .label{
+        color: #8692A6;
+    }
+    .input{
+        color: #8692A6;
+    }
+}
+
+@media (prefers-color-scheme: light){
+    #welcome{
+        color: #3e4450;
+    }
+    #id{
+        color: #3e4450;
+    }
+    #logoModeSombre{
+        display: none;
+    }
+    .input:focus ~ .label, .input:valid ~ .label {
+        color: #000000;
+    }
+    .line{
+        background-color: #000000;
+    }
+    .label{
+        color: #3e4450;
+    }
+    .input{
+        color: #3e4450;
+    }
+}
+
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active{
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: #ffffff;
+    transition: background-color 5000s ease-in-out 0s;
+    box-shadow: inset 0 0 20px 20px #23232329;
+}
