@@ -1,0 +1,37 @@
+version: '3'
+services:
+  courroux-sme:
+    image: courroux-sme:0.0.1
+    ports:
+      - "8000:5000"
+    depends_on:
+      - db
+  courroux-sapp:
+    image: courroux-sapp:0.0.1
+    # image: cgrosjeanfr/courroux_frontend:latest
+    ports:
+      - "8080:80"
+    depends_on:
+      - courroux-sme
+  db:
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: courroux
+      MYSQL_USER: courroux
+      MYSQL_PASSWORD: root
+    ports:
+      - "8083:3306"
+
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    restart: always
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "8808:80"
+
