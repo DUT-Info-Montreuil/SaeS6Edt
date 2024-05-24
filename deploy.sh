@@ -8,7 +8,11 @@ for dir in */; do
     # Check if the deploy.sh file exists
     if [ -f "deploy.sh" ]; then
         echo "Executing deploy.sh in directory: $dir"
-        bash deploy.sh  # Execute deploy.sh
+        if [[ "$OS" == "Windows_NT" ]]; then
+            ./deploy.sh  # Execute deploy.sh sous Windows
+        else
+            bash deploy.sh  # Execute deploy.sh sous Linux
+        fi
     else
         echo "No deploy.sh file in directory: $dir"
     fi
