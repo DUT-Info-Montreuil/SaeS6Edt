@@ -6,7 +6,7 @@ echo 'BEGIN'
 echo '1/7 Docker clear'
 docker stop courroux-sme
 docker rm --force courroux-sme
-docker rmi courroux-sme:0.0.1
+docker rmi courroux-sme:0.0.1 --force
 # docker images | grep none | awk '{ print $3; }' | xargs docker rmi --force
 echo '2/7 Docker build'
 # docker build --pull --rm -f "Dockerfile" -t courroux-sme:0.0.1 "."
