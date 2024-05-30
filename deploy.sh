@@ -22,6 +22,9 @@ done
 
 # Deploy the database and phpMyAdmin
 # docker-compose up -d --build db phpmyadmin
+
+docker-compose down 
+
 docker-compose up -d --build db
 
 
