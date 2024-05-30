@@ -3,7 +3,7 @@ services:
   courroux-sme:
     image: courroux-sme:0.0.1
     ports:
-      - "8000:5000"
+      - "8100:5000"
     depends_on:
       - db
   courroux-sapp:
