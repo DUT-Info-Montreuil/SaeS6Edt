@@ -2,12 +2,14 @@ version: '3'
 services:
   courroux-sme:
     image: courroux-sme:0.0.1
+    container_name: courroux_sme
     ports:
       - "8100:5000"
     depends_on:
       - db
   courroux-sapp:
     image: courroux-sapp:0.0.1
+    container_name: courroux_sapp
     # image: cgrosjeanfr/courroux_frontend:latest
     ports:
       - "8180:80"
@@ -15,6 +17,7 @@ services:
       - courroux-sme
   db:
     image: mysql:latest
+    container_name: courroux_db
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
