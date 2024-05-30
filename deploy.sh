@@ -21,7 +21,9 @@ for dir in */; do
 done
 
 # Deploy the database and phpMyAdmin
-docker-compose up -d --build db phpmyadmin
+# docker-compose up -d --build db phpmyadmin
+docker-compose up -d --build db
+
 
 # ./wait-for-it.sh -t 0 -q localhost:8083
 # # Wait for 5 seconds (adjust the sleep duration as needed)
