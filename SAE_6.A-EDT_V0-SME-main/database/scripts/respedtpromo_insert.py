@@ -4,50 +4,119 @@ from services.ResponsableEdtService import ResponsableEdtService
 
 
 dataRespEDT = [
+  #Département INFO
   {
-    'name' : 'Sihem',
-    'lastname' : 'Belabbes',
-    'username' : 'sbelabbes',
-    'password' : 'sihem1234'
+    'name' : 'Philippe',
+    'lastname' : 'Bonnot',
+    'username' : 'pbonnot',
+    'password' : 'bonnot1234'
   },
   {
-    'name' : 'Anne',
-    'lastname' : 'Ricordeau',
-    'username' : 'aricordeau',
-    'password' : 'anne1234'
+    'name' : 'Nedra',
+    'lastname' : 'Mellouli',
+    'username' : 'nmellouli',
+    'password' : 'mellouli1234'
+  },
+  {
+    'name' : 'Marianne',
+    'lastname' : 'Simonot',
+    'username' : 'msimonot',
+    'password' : 'simonot1234'
+  },
+  {
+    'name' : 'Marc',
+    'lastname' : 'Homps',
+    'username' : 'mhomps',
+    'password' : 'homps1234'
+  },
+  {
+    'name' : 'Mario',
+    'lastname' : 'Cataldi',
+    'username' : 'mcataldi',
+    'password' : 'cataldi1234'
+  },
+  {
+    'name' : 'Aurelien',
+    'lastname' : 'Bossard',
+    'username' : 'abossard',
+    'password' : 'bossard1234'
+  },
+  #Département INFO-COM
+  {
+    'name' : 'Marc',
+    'lastname' : 'Kaiser',
+    'username' : 'mkaiser',
+    'password' : 'kaiser1234'
+  },
+  {
+    'name' : 'Viviane',
+    'lastname' : 'Claus',
+    'username' : 'vclaus',
+    'password' : 'claus1234'
+  },
+  #Département QLIO
+    {
+    'name' : 'Sonia',
+    'lastname' : 'Menjeli',
+    'username' : 'smenjeli',
+    'password' : 'menjeli1234'
+  },
+    {
+    'name' : 'Charlotte',
+    'lastname' : 'Ballaydally',
+    'username' : 'cballaydally',
+    'password' : 'ballaydally1234'
+  },
+    {
+    'name' : 'Yasmina',
+    'lastname' : 'Hani',
+    'username' : 'yhani',
+    'password' : 'hani1234'
+  },
+  #Departement GACO
+  {
+    'name' : 'Amine',
+    'lastname' : 'Zizi',
+    'username' : 'azizi',
+    'password' : 'zizi1234'
+  },
+  {
+    'name' : 'Vincent',
+    'lastname' : 'Lebel',
+    'username' : 'vlebel',
+    'password' : 'lebel1234'
+  },
+  {
+    'name' : 'Stéphane',
+    'lastname' : 'Hurtado',
+    'username' : 'shurtado',
+    'password' : 'hurtado1234'
+  },
+  {
+    'name' : 'Jean-François',
+    'lastname' : 'Dhenin',
+    'username' : 'jfdhenin',
+    'password' : 'dhenin1234'
+  },
+  {
+    'name' : 'Marielle',
+    'lastname' : 'Baboulall',
+    'username' : 'mbaboulall',
+    'password' : 'baboulall1234'
+  },
+  {
+    'name' : 'Noiric',
+    'lastname' : 'Saintini',
+    'username' : 'nsaintini',
+    'password' : 'saintini1234'
+  },
+  {
+    'name' : 'Catherine',
+    'lastname' : 'Durand',
+    'username' : 'cdurand',
+    'password' : 'durand1234'
   }
 ]
-
-# Département INFO
-# p.bonnot@iut.univ-paris8.fr
-# n.mellouli@iut.univ-paris8.fr
-# m.simonot@iut.univ-paris8.fr
-# m.homps@iut.univ-paris8.fr
-# m.cataldi@iut.univ-paris8.fr
-# a.bossard@iut.univ-paris8.fr
-
-# Département GACO
-# Amine ZIZI <a.zizi@iut.univ-paris8.fr>
-# Vincent LEBEL <v.lebel@iut.univ-paris8.fr>
-# Stéphane HURTADO <s.hurtado@iut.univ-paris8.fr>
-# DHENIN Jean-François <jf.dhenin@iut.univ-paris8.fr>
-# BABOULALL Marielle <m.baboulall@iut.univ-paris8.fr>
-# Noiric SAINTINI <n.saintini@iut.univ-paris8.fr>
-# Catherine DURAND <c.durand@iut.univ-paris8.fr>
-
-
-# Département QLIO
-# s.menjeli@iut.univ-paris8.fr
-# c.ballaydally@iut.univ-paris8.fr
-# y.hani@iut.univ-paris8.fr
-
-# Département INFO-COM
-# m.kaiser@iut.univ-paris8.fr
-# vivianeclaus@icloud.com
-
-
-
-
 
 for resp in dataRespEDT:
     ResponsableEdtService.create_responsable_edt(resp)
