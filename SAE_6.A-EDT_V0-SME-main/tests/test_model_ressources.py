@@ -37,6 +37,7 @@ def test_ressources_initialization(app):
     # Create a test instance
     ressource = Ressources(
         name="Qualité dev",
+        color="red",
         initial="R5A05",
         id_promo=1
     )
@@ -53,7 +54,7 @@ def test_ressources_initialization(app):
     # Perform assertions to check if the instance was added and retrieved correctly
     assert retrieved_ressource is not None
     assert retrieved_ressource.name == "Qualité dev"
-    assert retrieved_ressource.id_promo == 1
+    assert retrieved_ressource.color == "red"
 
     # Clean up the database (optional)
     with app.app_context():
