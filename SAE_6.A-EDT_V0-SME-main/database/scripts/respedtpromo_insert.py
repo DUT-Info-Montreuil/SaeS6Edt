@@ -8,7 +8,7 @@ dataRespEDT = [
   {
     'name' : 'Philippe',
     'lastname' : 'Bonnot',
-    'username' : 'pbonnot',
+    'username' : 'pbonnot1',
     'password' : 'bonnot1234'
   },
   {
