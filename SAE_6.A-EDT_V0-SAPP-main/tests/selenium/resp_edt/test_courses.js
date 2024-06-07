@@ -2,22 +2,6 @@
 const { Builder, By, until, Select } = require('selenium-webdriver');
 const chrome = require('selenium-webdriver/chrome');
 const assert = require('assert');
-
-
-async function selectFirst(driver, xpath) {
-    let selectElement = await driver.wait(until.elementLocated(By.xpath(xpath)), 10000);
-    // await selectElement.click();
-    let options = await selectElement.findElements(By.tagName('option'));
-    for (let option of options) {
-        let isDisabled = await option.getAttribute('disabled');
-        if (!isDisabled) {
-            // console.log(`Selecting option: ${await option.getText()}`);
-            await option.click();
-            return;
-        }
-    }
-    throw new Error('No enabled options found in select element');
-}
     
 
 describe('Responsable Edt Test', function() {
@@ -89,13 +73,16 @@ describe('Responsable Edt Test', function() {
 
         const alert = await driver.wait(until.elementLocated(By.css('div[role="alert"]')), 10000);
         alert.click();
+        let isPresent = false;
         try {
             await driver.findElement(By.id('add-event-modal'));
-            await driver.findElement(By.xpath('//*[@id="add-event-modal"]/div/div/button')).click();
+            const close_add_form = await driver.wait(until.elementLocated(By.xpath('//*[@id="add-event-modal"]/div/div/button')));
+            close_add_form.click();
+            isPresent = true;
+        } catch (e) {}
+        if (isPresent)
             assert.fail(`Failed to add course`);
-        } catch (e) {
-            assert.ok(true, 'Course added successfully');
-        }
+
 
     });
 
@@ -118,7 +105,8 @@ describe('Responsable Edt Test', function() {
         await timeEndInput.sendKeys(formattedEndTime);
         await driver.sleep(10000);
         // const button_submit_modify = await driver.findElement(By.xpath('//*[@id="add-event-modal"]/div/div/div/form/button'));
-        await driver.wait(By.xpath('//*[@id="add-event-modal"]/div/div/div/form/button')).click();
+        const modify_button_submit = await driver.wait(until.elementLocated(By.xpath('//*[@id="add-event-modal"]/div/div/div/form/button')), 10000);
+        modify_button_submit.click();
         // await button_submit_modify.click();
 
     });
