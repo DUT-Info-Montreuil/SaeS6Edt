@@ -884,4 +884,15 @@ export class WeekCalendarComponent implements OnInit {
     this.disablePreventDefault(event);
     window.location.href = "/logout";
   }
+
+
+  /*
+      @function importFlopedt
+      @param event: any
+      @desc: call import flopedt endpoint
+   */
+  importFlopedt(event: any) {
+    this.disablePreventDefault(event);
+    this.toggleModalFlopEdt();
+  }
 }

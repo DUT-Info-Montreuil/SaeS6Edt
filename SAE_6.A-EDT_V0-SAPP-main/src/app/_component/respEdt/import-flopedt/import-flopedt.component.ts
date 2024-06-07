@@ -11,7 +11,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class ImportFlopedtComponent {
 
   @Output() closeModal: EventEmitter<void> = new EventEmitter<void>();
-
+  @Output() importFlopedt: EventEmitter<void> = new EventEmitter<void>();
 
   /*
     @function closeModaleAdd
@@ -19,5 +19,13 @@ export class ImportFlopedtComponent {
    */
   closeModaleAdd() {
       this.closeModal.emit();
+  }
+
+  /*
+    @function importFlopedt
+    @desc: import flopedt
+   */
+  importFlopedtAdd() {
+    this.importFlopedt.emit();
   }
 }
