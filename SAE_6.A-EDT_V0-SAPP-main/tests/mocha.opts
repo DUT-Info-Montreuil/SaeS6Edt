@@ -1,0 +1,3 @@
+--reporter mocha-junit-reporter
+--reporter-options mochaFile=./reports/test-results.xml
+--timeout 30000

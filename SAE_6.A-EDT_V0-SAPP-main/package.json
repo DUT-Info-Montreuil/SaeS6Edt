@@ -6,7 +6,9 @@
     "start": "ng serve --disable-host-check",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "test:selenium": "mocha tests/selenium/test_login.js"
+
   },
   "private": true,
   "dependencies": {
@@ -17,12 +19,16 @@
     "@angular/platform-browser-dynamic": "^16.2.0",
     "@angular/router": "^16.2.0",
     "angular-calendar": "^0.31.0",
+    "chromedriver": "^125.0.3",
     "date-fns": "^2.30.0",
+    "mocha": "^10.4.0",
+    "mocha-junit-reporter": "^2.2.1",
     "moment": "^2.29.4",
     "ng2-search-filter": "^0.5.1",
     "ngx-papaparse": "^8.0.0",
     "ngx-toastr": "^18.0.0",
     "rxjs": "~7.8.0",
+    "selenium-webdriver": "^4.21.0",
     "tslib": "^2.6.2",
     "zone.js": "~0.13.0"
   },
