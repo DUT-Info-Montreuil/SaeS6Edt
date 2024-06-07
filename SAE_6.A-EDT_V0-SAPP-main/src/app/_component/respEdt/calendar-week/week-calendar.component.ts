@@ -38,7 +38,7 @@ export function momentAdapterFactory() {
 })
 
 export class WeekCalendarComponent implements OnInit {
-  
+
   @Input() user: User;
   courses: Course[] = [];
   teachers: Teacher[] = [];
@@ -70,7 +70,7 @@ export class WeekCalendarComponent implements OnInit {
   selectedDays: {name: string, selected: boolean, date: Date}[] = [];
 
   idUser: any;
-  
+
   pasteEnable: boolean = false;
 
   public eventSelectionne: any = null;
@@ -173,9 +173,9 @@ export class WeekCalendarComponent implements OnInit {
   ngOnInit(): void {
     this.updateView();
     forkJoin([
-      this.teacherService.getTeachers(), 
+      this.teacherService.getTeachers(),
       this.roomService.getSalles(),
-      // this.resourceService.getResources(), 
+      // this.resourceService.getResources(),
       this.groupService.getGroups(),
       this.weekCommentService.getComments(),
       this.edtManagerService.getPromoEdtManager(),
@@ -274,8 +274,8 @@ export class WeekCalendarComponent implements OnInit {
   openModalPasswd(){
     this.dialog.open(ChangePasswdComponent);
   }
-  
- 
+
+
   /*
       @function openModalAdd
       @desc: open modal add
@@ -283,7 +283,7 @@ export class WeekCalendarComponent implements OnInit {
   openModalAdd() {
     this.showModalAdd = true;
   }
-  
+
   /*
       @function closeModalAdd
       @desc: close modal add
@@ -309,7 +309,7 @@ export class WeekCalendarComponent implements OnInit {
   }
 
 
-  
+
   /*
       @function getComment
       @param date: Date
@@ -436,7 +436,7 @@ export class WeekCalendarComponent implements OnInit {
       color: {
         primary: "#FFFFFF",
         secondary: this.getRessourcesByInitial(course.initial_ressource)!.color,
-      },        
+      },
       draggable: true,
       resizable: {
         beforeStart: true,
@@ -483,7 +483,7 @@ export class WeekCalendarComponent implements OnInit {
       const last = pourcents.pop();
       let parentPourcent = 100 / last.length;
       left = last.index * parentPourcent;
-      
+
       for (let item of pourcents.reverse()){
         parentPourcent = parentPourcent / item.length;
         left = left + item.index * parentPourcent;
@@ -511,6 +511,7 @@ export class WeekCalendarComponent implements OnInit {
       @desc: change view day
   */
   changeViewDay(event : any){
+    console.log(event)
     this.viewDate = new Date(event.day.date);
     this.toggleWeekCalendar()
   }
@@ -555,7 +556,7 @@ export class WeekCalendarComponent implements OnInit {
       }
     );
   }
-  
+
   /*
       @function loadEventStart
       @param event: any
@@ -570,7 +571,7 @@ export class WeekCalendarComponent implements OnInit {
       }, 100);
     });
   }
-  
+
   /*
       @function loadEventEnd
       @param event: any
@@ -602,7 +603,7 @@ export class WeekCalendarComponent implements OnInit {
 
     let start_time_initial = course_find.start_time;
     let end_time_initial = course_find.end_time;
-    
+
     // Récupérer l'heure et les minutes de event.newStart
     let heuresDebut = event.newStart.getHours();
     let minutesDebut = event.newStart.getMinutes();
@@ -667,7 +668,7 @@ export class WeekCalendarComponent implements OnInit {
       @function startTimeChanged
       @param newEvent: any
       @param ancienneDate: string
-      @desc: start time changed 
+      @desc: start time changed
   */
   startTimeChanged(newEvent: any, ancienneDate: string) {
     newEvent.event.start = Date.parse(ancienneDate);
@@ -687,7 +688,7 @@ export class WeekCalendarComponent implements OnInit {
   /*
       @function updateDateEnd
       @param date: Date
-      @desc: update date end 
+      @desc: update date end
   */
   updateDateEnd(date: Date) {
     this.eventSelectionne.event.end = date;
@@ -707,7 +708,7 @@ export class WeekCalendarComponent implements OnInit {
       @function getCourseByEventId
       @param eventId: number
       @return Course
-      @desc: get course by event id 
+      @desc: get course by event id
   */
   getCourseByEventId(eventId: number) {
     return this.courses.find(course => course.id == eventId);
@@ -750,14 +751,14 @@ export class WeekCalendarComponent implements OnInit {
       @param id: number
       @return string
       @desc: get initial teacher
-  */  
+  */
   getInitialTeacher(id: number) {
     let id_teacher =  this.courses.find(course => course.id == id)?.id_enseignant;
     let teacher = this.teachers.find(teacher => teacher.id == id_teacher);
     return teacher? teacher.staff.initial : "";
   }
 
-  
+
   /*
       @function publishCourse
       @desc: publish course
@@ -797,7 +798,7 @@ export class WeekCalendarComponent implements OnInit {
       @function generateWeekDays
       @return Date[]
       @desc: generate week days
-  */ 
+  */
   generateWeekDays(): Date[] {
     let displayedDates: Date[] = [];
     const start: Date = startOfWeek(this.viewDate, { weekStartsOn: DAYS_OF_WEEK.MONDAY });

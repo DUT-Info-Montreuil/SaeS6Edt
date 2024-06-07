@@ -1,5 +1,6 @@
 version: '3'
 services:
+
   courroux-sme:
     image: courroux-sme:0.0.1
     ports:
@@ -23,7 +24,9 @@ services:
       MYSQL_PASSWORD: root
     ports:
       - "8083:3306"
-
+    volumes:
+      - ./database/SQL_script/init.sql:/docker-entrypoint-initdb.d/init.sql:rw
+      - mysql_data:/var/lib/postgresql/data:rw
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
@@ -35,3 +38,5 @@ services:
     ports:
       - "8808:80"
 
+volumes:
+  mysql_data:
