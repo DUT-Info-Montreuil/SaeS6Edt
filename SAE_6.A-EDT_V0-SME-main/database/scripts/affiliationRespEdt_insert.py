@@ -7,6 +7,10 @@ dataAffiliationRespEdt = [
     {
         "id_resp": 1,
         "id_promo": 1
+    }, 
+    {
+        "id_resp": 2,
+        "id_promo": 1
     }
 ]
 
