@@ -76,13 +76,18 @@ describe("add room Test", function () {
     await driver
       .findElement(By.xpath('//*[@id="tableauNumerique"]'))
       .sendKeys("1");
+    await driver.sleep(3000);
+
     await driver.findElement(By.xpath('//*[@id="withoutCSV"]')).click();
   });
 
   it("delete room step", async function () {
+    await driver.sleep(1000);
     await driver
       .findElement(By.xpath('//*[@id="accordion-collapse-heading-2"]/button'))
       .click();
+    await driver.sleep(1000);
+
     await driver
       .findElement(
         By.xpath(
@@ -97,5 +102,6 @@ describe("add room Test", function () {
         )
       )
       .click();
+    await driver.sleep(3000);
   });
 });

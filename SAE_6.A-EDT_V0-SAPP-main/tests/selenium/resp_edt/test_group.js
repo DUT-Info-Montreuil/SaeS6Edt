@@ -66,6 +66,7 @@ describe("Groupe Test", function () {
     await driver.findElement(By.xpath('//*[@id="choix"]/option[5]')).click();
     await selectFirst(driver, '//*[@id="niveau"]');
     await driver.findElement(By.xpath('//*[@id="name"]')).sendKeys("E");
+    await driver.sleep(2000);
     await driver
       .findElement(
         By.xpath(
@@ -92,6 +93,6 @@ describe("Groupe Test", function () {
         )
       )
       .click();
-    await driver.sleep(1000);
+    await driver.sleep(3000);
   });
 });

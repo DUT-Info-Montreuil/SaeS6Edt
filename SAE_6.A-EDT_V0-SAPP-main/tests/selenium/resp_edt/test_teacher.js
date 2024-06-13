@@ -76,6 +76,7 @@ describe("Teacher Manager Test", function () {
     await driver
       .findElement(By.xpath('//*[@id="password"]'))
       .sendKeys("best123");
+    await driver.sleep(3000);
     await driver.findElement(By.xpath('//*[@id="withoutCSV"]')).click();
   });
 
@@ -99,6 +100,6 @@ describe("Teacher Manager Test", function () {
         )
       )
       .click();
-    await driver.sleep(1000);
+    await driver.sleep(3000);
   });
 });

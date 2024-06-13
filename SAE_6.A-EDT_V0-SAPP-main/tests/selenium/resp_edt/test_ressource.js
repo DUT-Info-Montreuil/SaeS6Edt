@@ -70,6 +70,7 @@ describe("Ressource Test", function () {
     await driver.findElement(By.xpath('//*[@id="name"]')).sendKeys("Anglais");
     await driver.findElement(By.xpath('//*[@id="initial"]')).sendKeys("R3-12");
     await selectFirst(driver, '//*[@id="id_promo"]');
+    await driver.sleep(3000);
     await driver
       .findElement(
         By.xpath('//*[@id="accordion-collapse-body-1"]/div/form/button')
@@ -97,6 +98,6 @@ describe("Ressource Test", function () {
         )
       )
       .click();
-    await driver.sleep(1000);
+    await driver.sleep(3000);
   });
 });
