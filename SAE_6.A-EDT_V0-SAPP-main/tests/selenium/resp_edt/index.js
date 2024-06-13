@@ -6,7 +6,7 @@ const assert = require('assert');
 const fs = require('fs');
 const path = require('path');
     
-async function runTestsInDirectory(directoryPath) {
+function runTestsInDirectory(directoryPath) {
     const files = fs.readdirSync(directoryPath);
     for (const file of files) {
         const filePath = path.join(directoryPath, file);
