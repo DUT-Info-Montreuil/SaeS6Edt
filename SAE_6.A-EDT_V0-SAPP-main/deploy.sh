@@ -7,6 +7,7 @@ echo '1/8 Docker clear'
 docker stop courroux-sapp
 docker rm --force courroux-sapp
 # docker images | grep none | awk '{ print $3; }' | xargs docker rmi --force
+docker rmi courroux-sapp:0.0.1 --force
 echo '2/8 Angular build prod'
 ng build -c production --delete-output-path
 echo '3/8 Docker build'

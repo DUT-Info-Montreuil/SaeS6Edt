@@ -21,15 +21,20 @@ for dir in */; do
 done
 
 # Deploy the database and phpMyAdmin
-docker-compose up -d --build db phpmyadmin
+# docker-compose up -d --build db phpmyadmin
+
+docker-compose down 
+
+docker-compose up -d --build db
+
 
 # ./wait-for-it.sh -t 0 -q localhost:8083
 # # Wait for 5 seconds (adjust the sleep duration as needed)
 # sleep 5
 
-docker-compose up -d courroux-sapp
+docker-compose up -d --build courroux-sapp
 
 # Deploy the back-end
 sleep 10
-docker-compose up -d courroux-sme
+docker-compose up -d --build courroux-sme
 
