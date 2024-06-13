@@ -96,16 +96,23 @@ def update_user(id):
 @user_bp.route('/identify', methods=['GET'])
 @jwt_required()
 def identify():
-    # Récupération de l'identité de l'utilisateur actuel.
     current_user = get_jwt_identity()
     try:
-        # Récupération de l'utilisateur par son ID.
         user = UserService.get_by_id(current_user)
-        user_roles = LdapService.get_user_role(user.username)
         if not user:
-            return jsonify({'error': 'User not found'}),404
+            return jsonify({'error': 'User not found'}), 404
+
+        user_roles = LdapService.get_user_role(user.username)
+        if not user_roles:
+            return jsonify({'error': 'User roles not found'}), 404
+
+        normalized_user_roles = [LdapService.normalize_role(role) for role in user_roles]
+        user_role_normalized = LdapService.normalize_role(user.role)
+
+        if user_role_normalized not in normalized_user_roles:
+            return jsonify({'error': 'User role not authorized'}), 403
+
+        return jsonify(user.to_dict()), 200
+
     except Exception as e:
-        # En cas d'erreur, retourne un message d'erreur.
-        return jsonify({'error': str(e)}),403
-    # Retourne les informations de l'utilisateur.
-    return jsonify(user.to_dict()),200
+        return jsonify({'error': str(e)}), 403

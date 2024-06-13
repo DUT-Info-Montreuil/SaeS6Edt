@@ -82,3 +82,11 @@ class LdapService:
         except Exception as e:
             print("Erreur lors de la récupération du rôle de l'utilisateur :", e)
             return None
+
+    def normalize_role(role):
+        role_mapping = {
+            "ROLE_STUDENT": "etudiants",
+            "ROLE_TEACHER": "profs",
+            "ROLE_RESP_EDT": "profs",
+        }
+        return role_mapping.get(role, role).lower()
