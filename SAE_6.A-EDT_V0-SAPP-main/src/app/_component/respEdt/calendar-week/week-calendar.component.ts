@@ -25,6 +25,7 @@ import { User } from 'src/app/_model/entity/user.model';
 import { MatDialog } from '@angular/material/dialog';
 import { ChangePasswdComponent } from '../../general/change-passwd/change-passwd.component';
 import { AffiliationRessourcePromo } from 'src/app/_service/affiliationRessourcePromo.service';
+import {FlopEdtService} from "../../../_service/flopEdt.service";
 
 export function momentAdapterFactory() {
   return adapterFactory(moment);
@@ -116,7 +117,8 @@ export class WeekCalendarComponent implements OnInit {
     private edtManagerService: EdtManagerService,
     private userService: UserService,
     private dialog: MatDialog,
-    private affRessourcePromoService: AffiliationRessourcePromo
+    private affRessourcePromoService: AffiliationRessourcePromo,
+    private flopedtService: FlopEdtService
     ) {
   }
 
@@ -892,7 +894,21 @@ export class WeekCalendarComponent implements OnInit {
       @desc: call import flopedt endpoint
    */
   importFlopedt(event: any) {
-    this.disablePreventDefault(event);
+    /*this.promoSelected.group; = BUT INFO S6; dept = "INFO"*/
+
+    let dept = this.promoSelected.group.name.split(" ")[1];
+    let week = getWeek(this.viewDate);
+    let year = this.viewDate.getFullYear();
+    let work_copy = 0;
+    this.flopedtService.importFlopEdt(dept,week, year, work_copy).subscribe({
+      next: () => {
+        this.toastr.success('L\'importation a été effectuée avec succès', 'Succès', { timeOut: 2000 });
+        this.loadEvents();
+      },
+      error: error => {
+        this.toastr.error('Une erreur est survenue lors de l\'importation', 'Erreur', { timeOut: 2000 });
+      }
+    });
     this.toggleModalFlopEdt();
   }
 }

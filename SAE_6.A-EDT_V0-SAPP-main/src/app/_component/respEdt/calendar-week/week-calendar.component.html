@@ -103,7 +103,7 @@
                       </svg>
                     </button>
                     <ng-container class="block" *ngIf="showModalFlopEdt">
-                        <app-import-flopedt (closeModal)="toggleModalFlopEdt()"></app-import-flopedt>
+                        <app-import-flopedt (closeModal)="toggleModalFlopEdt()" (importFlopedt)="importFlopedt($event)"></app-import-flopedt>
                     </ng-container>
                     <h1 class="text-3xl font-semibold text-black dark:text-white py-3">Semaine {{getWeek(viewDate)}} ({{ viewDate | date:'yyyy' }})</h1>
                     <button  (click)="toggleModalComment()">
