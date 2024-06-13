@@ -8,7 +8,7 @@
                 class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 mt-5 mb-5">Aujourd'hui</button>
                 <button id="next" mwlCalendarNextView [(viewDate)]="viewDate" [view]="view" [excludeDays]="[0, 6]" (click)="loadEvents()"
                 class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r mr-5 mt-5 mb-5">Prochain</button>
-                
+
             </div>
 
             <div *ngIf="viewPhone" class="flex flex-row items-center pe-5">
@@ -23,7 +23,7 @@
                 <button (click)="cancelCourse()"class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l mt-5 mb-5">Annuler</button>
                 <button *ngIf="brouillon" (click)="publishCourse()" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r mr-5 mt-5 mb-5">Publier</button>
                 <button *ngIf="!brouillon" (click)="publishCourse()" disabled class="bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r mr-5 mt-5 mb-5 cursor-not-allowed">Rien a publier</button>
-                <button 
+                <button
                 (click)="activateDraft()"
                 class="text-gray-800 font-bold py-2 px-4 rounded mr-5"
                 [ngClass]="{'bg-amber-400 hover:bg-amber-600':isDraftActive, 'bg-gray-300 hover:bg-gray-400':!isDraftActive}"
@@ -72,11 +72,11 @@
                             <option *ngFor="let promo of promoManaged" [value]="promo.id">{{promo.group.name}}</option>
                         </select>
                     </div>
-        
+
                     <h5 id="drawer-label" class="inline-flex items-center mb-4 text-base font-semibold text-gray-500 dark:text-gray-400">Compte</h5><br>
                     <button *ngIf="!viewPhone" class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700" (click)="redirectToLogout($event)">Déconnexion</button>
                     </div>
-      
+
               </div>
         </div>
     </div>
@@ -96,6 +96,15 @@
         <div class="w-full text-center items-center justify-center relative">
             <div class="text-center items-center justify-center ms-16 flex flex-col relative">
                 <div class="flex flex-row gap-3">
+                    <button (click)="toggleModalFlopEdt()">
+                      <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                        <path fill-rule="evenodd" d="M13 11.15V4a1 1 0 1 0-2 0v7.15L8.78 8.374a1 1 0 1 0-1.56 1.25l4 5a1 1 0 0 0 1.56 0l4-5a1 1 0 1 0-1.56-1.25L13 11.15Z" clip-rule="evenodd"/>
+                        <path fill-rule="evenodd" d="M9.657 15.874 7.358 13H5a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2h-2.358l-2.3 2.874a3 3 0 0 1-4.685 0ZM17 16a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2H17Z" clip-rule="evenodd"/>
+                      </svg>
+                    </button>
+                    <ng-container class="block" *ngIf="showModalFlopEdt">
+                        <app-import-flopedt (closeModal)="toggleModalFlopEdt()" (importFlopedt)="importFlopedt($event)"></app-import-flopedt>
+                    </ng-container>
                     <h1 class="text-3xl font-semibold text-black dark:text-white py-3">Semaine {{getWeek(viewDate)}} ({{ viewDate | date:'yyyy' }})</h1>
                     <button  (click)="toggleModalComment()">
                         <svg *ngIf="getComment(viewDate)" width="30" height="30" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.49991 0.876892C3.84222 0.876892 0.877075 3.84204 0.877075 7.49972C0.877075 11.1574 3.84222 14.1226 7.49991 14.1226C11.1576 14.1226 14.1227 11.1574 14.1227 7.49972C14.1227 3.84204 11.1576 0.876892 7.49991 0.876892ZM1.82707 7.49972C1.82707 4.36671 4.36689 1.82689 7.49991 1.82689C10.6329 1.82689 13.1727 4.36671 13.1727 7.49972C13.1727 10.6327 10.6329 13.1726 7.49991 13.1726C4.36689 13.1726 1.82707 10.6327 1.82707 7.49972ZM8.24992 4.49999C8.24992 4.9142 7.91413 5.24999 7.49992 5.24999C7.08571 5.24999 6.74992 4.9142 6.74992 4.49999C6.74992 4.08577 7.08571 3.74999 7.49992 3.74999C7.91413 3.74999 8.24992 4.08577 8.24992 4.49999ZM6.00003 5.99999H6.50003H7.50003C7.77618 5.99999 8.00003 6.22384 8.00003 6.49999V9.99999H8.50003H9.00003V11H8.50003H7.50003H6.50003H6.00003V9.99999H6.50003H7.00003V6.99999H6.50003H6.00003V5.99999Z" class="fill-black dark:fill-white" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
@@ -106,11 +115,11 @@
                     <comment-add [comment]="getComment(viewDate)" [date]="viewDate" [weekNumber]="getWeek(viewDate)" [promo]="promoSelected" (closeModal)="toggleModalComment()" (updateOrCreate)="addOrUpdateComment($event)" (remove)="deleteComment($event)"></comment-add>
                 </ng-container>
             </div>
-            
+
         </div>
         <mwl-calendar-week-view *ngIf="isWeekCalendar"
             [viewDate]="viewDate"
-            class="week-view " 
+            class="week-view "
             [events]="events"
             [excludeDays]="excludedDaysList"
             locale="fr"
@@ -121,8 +130,8 @@
             (eventTimesChanged)="eventTimesChanged($event)"
             [refresh] = "refresh"
             [eventTitleTemplate]="customeWeekViewTemplate"
-            [snapDraggedEvents]="true"    
-            [headerTemplate]="customHeaderTemplate"    
+            [snapDraggedEvents]="true"
+            [headerTemplate]="customHeaderTemplate"
         ></mwl-calendar-week-view>
         <div *ngIf="!isWeekCalendar"  class="w-full text-center bg-white p-1 text-black hover:bg-gray-200 ps-[70px]" (click)="toggleWeekCalendar()">
             <h2 class="font-bold">{{ viewDate | date:'EEEE' | lowercase }}</h2>
@@ -130,7 +139,7 @@
         </div>
         <mwl-calendar-day-view *ngIf="!isWeekCalendar"
         [viewDate]="viewDate"
-        class="week-view" 
+        class="week-view"
         [events]="events"
         locale="fr"
         [dayStartHour]="8"
@@ -160,7 +169,7 @@
                             <p *ngIf="day.day == 6" class="font-semibold">Zone de brouillon</p>
                             <p *ngIf="day.day != 6" class="font-semibold">{{ day.date | calendarDate:'weekViewColumnHeader':locale }}</p>
                         </div>
-                        <div class="day-number" *ngIf="day.day != 6">{{ day.date | calendarDate:'weekViewColumnSubHeader':locale }}</div>                      
+                        <div class="day-number" *ngIf="day.day != 6">{{ day.date | calendarDate:'weekViewColumnSubHeader':locale }}</div>
                     </div>
                 </div>
             </div>
@@ -190,7 +199,7 @@
 
 <ng-container *ngIf="showModalAdd && !loading">
     <course-add [teachers]="teachers" [resources]="ressourcesShow" [salles]="salles" [groupes]="group_show" (courseEvent)="addCourse($event)" (closeModal)="closeModalAdd()"></course-add>
-</ng-container> 
+</ng-container>
 
 
 <ng-container>

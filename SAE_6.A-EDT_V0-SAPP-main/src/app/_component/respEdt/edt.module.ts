@@ -22,6 +22,7 @@ import { ModifModalFormComponent } from './modals/modif-modal-form/modif-modal-f
 import { ChangePasswdComponent } from '../general/change-passwd/change-passwd.component';
 import { GeneralModule } from '../general/general.module';
 import { AppModule } from 'src/app/app.module';
+import {ImportFlopedtComponent} from "./import-flopedt/import-flopedt.component";
 
 registerLocaleData(localeFr, 'fr');
 
@@ -46,19 +47,20 @@ class CustomDateFormater extends CalendarNativeDateFormatter {
     CourseDuplicateComponent,
     CourseDuplicateShowComponent
   ],
-  imports: [
-    BrowserAnimationsModule,
-    MatDialogModule,
-    ToastrModule.forRoot({
-      positionClass: 'toast-bottom-center',
-      progressBar: true,
-    }),
-    BrowserModule,
-    CalendarModule.forRoot({ provide: DateAdapter, useFactory: momentAdapterFactory }),
-    ReactiveFormsModule,
-    FormsModule,
-    HttpClientModule, 
-  ],
+    imports: [
+        BrowserAnimationsModule,
+        MatDialogModule,
+        ToastrModule.forRoot({
+            positionClass: 'toast-bottom-center',
+            progressBar: true,
+        }),
+        BrowserModule,
+        CalendarModule.forRoot({provide: DateAdapter, useFactory: momentAdapterFactory}),
+        ReactiveFormsModule,
+        FormsModule,
+        HttpClientModule,
+        ImportFlopedtComponent,
+    ],
   providers: [
     DatePipe,
     {provide: CalendarDateFormatter, useClass:CustomDateFormater},
