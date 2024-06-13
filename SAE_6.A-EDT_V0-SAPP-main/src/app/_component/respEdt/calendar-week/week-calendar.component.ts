@@ -511,8 +511,7 @@ export class WeekCalendarComponent implements OnInit {
       @desc: change view day
   */
   changeViewDay(event : any){
-    console.log(event)
-    this.viewDate = new Date(event.day.date);
+    this.viewDate = new Date(event.date);
     this.toggleWeekCalendar()
   }
 
