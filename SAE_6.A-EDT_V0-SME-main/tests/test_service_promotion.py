@@ -34,13 +34,14 @@ def test_create_promo(app):
             'name': 'Class of 2023',
             'niveau': 'Bachelor',
             'id_resp': 1,
+            'year': 2025,
         }
         promo = PromotionService.create_promo(promo_data)
 
         assert promo is not None
         assert promo.name == 'Class of 2023'
         assert promo.niveau == 'Bachelor'
-        assert promo.id_resp == 1
+        assert promo.year == 2025
 
         PromotionService.delete_promo(promo.id_promo)
 
@@ -61,6 +62,7 @@ def test_get_promo_by_id(app):
             'name': 'Class of 2024',
             'niveau': 'Master',
             'id_resp': 2,
+            'year': 2025,
         }
         promo = PromotionService.create_promo(promo_data)
 
@@ -70,7 +72,7 @@ def test_get_promo_by_id(app):
         assert retrieved_promo is not None
         assert retrieved_promo.name == 'Class of 2024'
         assert retrieved_promo.niveau == 'Master'
-        assert retrieved_promo.id_resp == 2
+        assert retrieved_promo.year == 2025
 
         PromotionService.delete_promo(promo.id_promo)
 
@@ -83,6 +85,7 @@ def test_update_promo(app):
             'name': 'Class of 2025',
             'niveau': 'Ph.D.',
             'id_resp': 3,
+            'year': 2025,
         }
         promo = PromotionService.create_promo(promo_data)
 
@@ -105,6 +108,7 @@ def test_delete_promo(app):
             'name': 'Class of 2027',
             'niveau': 'Undergraduate',
             'id_resp': 5,
+            'year': 2025,
         }
         promo = PromotionService.create_promo(promo_data)
 

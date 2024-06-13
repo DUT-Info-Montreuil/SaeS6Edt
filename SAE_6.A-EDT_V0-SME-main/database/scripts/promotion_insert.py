@@ -35,9 +35,21 @@ dataPromotions = [
   },
 
   {
+    'niveau' : 6,
+    'year' : 2023,
+    'name' : 'BUT QLIO S6'
+  },
+
+  {
     'niveau' : 4,
     'year' : 2023,
-    'name' : 'BUT INFO S4'
+    'name' : 'BUT INFOCOM S4'
+  },
+
+  {
+    'niveau' : 5,
+    'year' : 2023,
+    'name' : 'BUT INFOCOM S5'
   }
 ]
 

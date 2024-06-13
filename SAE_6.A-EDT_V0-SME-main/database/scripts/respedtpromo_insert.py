@@ -21,6 +21,3 @@ dataRespEDT = [
 
 for resp in dataRespEDT:
     ResponsableEdtService.create_responsable_edt(resp)
-
-
-    
