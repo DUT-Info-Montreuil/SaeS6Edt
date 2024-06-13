@@ -40,7 +40,7 @@ def login():
     password = request.json.get('password')
 
     # Tentative de connexion à l'aide de LdapService
-    conn = LdapService.get_connection(username, password)
+    conn = LdapService.authenticate_user(username, password)
     if conn:
         # Si la connexion LDAP est réussie, tente de récupérer l'utilisateur localement.
         user = UserService.get_by_username(username)

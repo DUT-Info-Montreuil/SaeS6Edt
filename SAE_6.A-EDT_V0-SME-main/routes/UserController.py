@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify, send_from_directory, request
 from services.UserService import UserService
+from services.LdapService import LdapService
 from models.User import User
 from functools import wraps
 from flask_jwt_extended import (jwt_required, create_access_token, get_jwt_identity)
@@ -100,6 +101,7 @@ def identify():
     try:
         # Récupération de l'utilisateur par son ID.
         user = UserService.get_by_id(current_user)
+        user_roles = LdapService.get_user_role(user.username)
         if not user:
             return jsonify({'error': 'User not found'}),404
     except Exception as e:
