@@ -111,7 +111,20 @@ export class DeleteModalComponent implements OnInit{
             console.log(error);
           }
         });
+      },
+      error: error=> {
+        this.responsableService.deleteEdtManager(this.data.element.id).subscribe({
+          next: response => {
+            this.toastr.success("le responsable a bien été supprimé!");
+            this.responsablesChanged();
+          },
+          error: error=> {
+            this.toastr.error("Impossible de supprimer le résponsable tant qu'il est affecté à d'autres entité");
+            console.log(error);
+          }
+        });
       }
+      
     });
     this.elementASupp = "";
   }
