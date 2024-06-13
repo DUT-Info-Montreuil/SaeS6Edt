@@ -12,6 +12,14 @@ dataUsers = [
     'lastname' : 'Obrun',
     'INE' : 'aeifyg848184'
   },
+  
+    {
+    'username' : 'mtoure',
+    'password' : 'muB436D77',
+    'name' : 'Mehedi',
+    'lastname' : 'Toure',
+    'INE' : 'beifyg848133'
+  },
 
   {
     'username' : 'cyril_grosjean',

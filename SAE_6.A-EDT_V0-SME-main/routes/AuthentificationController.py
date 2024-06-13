@@ -7,6 +7,7 @@ from database.config import db
 
 # Importation de UserService et du modèle User
 from services.UserService import UserService
+from services.LdapService import LdapService
 from models.User import User
 
 # Création d'un nouveau Blueprint. C'est une façon d'organiser les routes dans Flask.
@@ -38,18 +39,20 @@ def login():
     username = request.json.get('username')
     password = request.json.get('password')
 
-    # Tentative de récupération d'un utilisateur avec le nom d'utilisateur fourni.
-    user = UserService.get_by_username(username)
-    if (user is not None):
-        # Si un utilisateur a été trouvé et que le mot de passe fourni est correct, crée un token d'accès JWT pour l'utilisateur.
-        if (user.check_password(password)):
+    # Tentative de connexion à l'aide de LdapService
+    conn = LdapService.get_connection(username, password)
+    if conn:
+        # Si la connexion LDAP est réussie, tente de récupérer l'utilisateur localement.
+        user = UserService.get_by_username(username)
+        if user:
             additional_claims = {'role': user.role}
             access_token = create_access_token(identity=user.id, additional_claims=additional_claims)
             return {'access_token': access_token}, 200
+        else:
+            return {'message': 'Utilisateur LDAP authentifié mais non trouvé dans la base de données locale'}, 404
     else:
-        # Si aucun utilisateur n'a été trouvé ou si le mot de passe était incorrect, retourne un message d'échec d'authentification.
+        # Si l'authentification LDAP échoue, retourne un message d'échec d'authentification.
         return {'message': 'Authentification échouée'}, 401
-    
 
 @auth_bp.route('/auth/changepasswd', methods=['PUT'])
 def changepasswd():
