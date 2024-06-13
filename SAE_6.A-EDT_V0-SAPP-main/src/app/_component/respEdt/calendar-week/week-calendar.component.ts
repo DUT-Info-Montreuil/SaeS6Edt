@@ -67,6 +67,8 @@ export class WeekCalendarComponent implements OnInit {
   isWeekCalendar = true;
   viewPhone = false;
 
+  args: any[] = [];
+
   selectedDays: {name: string, selected: boolean, date: Date}[] = [];
 
   idUser: any;
@@ -242,6 +244,36 @@ export class WeekCalendarComponent implements OnInit {
     this.promoSelected = this.promoManaged.find(promo => promo.id == id_promo)!;
     this.refreshRessources();
     this.loadEvents();
+  }
+
+    /*
+    @function filterByRoom
+    @desc Filters the events by room and loads the filtered events
+  */
+  filterByRoom(event: any){
+    const arg = {room: event.target.value};
+    this.addArguments(arg);
+    this.loadEvents();
+  }
+    /*
+    @function addArguments
+    @desc Adds arguments to the args array
+    @param args - The arguments to be added
+  */
+  addArguments(args: any){
+    //supprimer les arguments deja existant
+    this.args = this.args.filter(arg => Object.keys(arg)[0] != Object.keys(args)[0]);
+    this.args.push(args);
+  }
+
+    /*
+    @function filterByTeacher
+    @desc Filters the events by teacher and loads the filtered events
+  */
+  filterByTeacher(event: any){
+      const arg = {teacher: event.target.value};
+      this.addArguments(arg);
+      this.loadEvents();
   }
 
   /*
