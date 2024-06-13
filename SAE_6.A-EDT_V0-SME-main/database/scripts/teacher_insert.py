@@ -17,6 +17,12 @@ dataTeacher = [
       'lastname' : 'Bonnot',
       'username' : 'pbonnot',
       'password' : 'philippe1234'
+    }, 
+    {
+      'name' : 'Mariane',
+      'lastname' : 'Simonot',
+      'username' : 'Msalut',
+      'password' : '1234'
     }
 ]
 

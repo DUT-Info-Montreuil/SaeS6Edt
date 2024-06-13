@@ -13,6 +13,7 @@ from .ResponsableEdtController import responsable_edt_bp
 from .WeekCommentController import week_comment_bp
 from .UserGroupeController import usergroupe_bp
 from .AffRessourcePromoController import affiliationressourcepromo_bp
+from .convertJson import convert_bp
 
 
 def register_routes(app):
@@ -30,5 +31,6 @@ def register_routes(app):
     app.register_blueprint(usergroupe_bp)
     app.register_blueprint(affiliationrespedt_bp)
     app.register_blueprint(affiliationressourcepromo_bp)
+    app.register_blueprint(convert_bp)
 
 # Exportez la fonction pour l'utiliser dans app.py

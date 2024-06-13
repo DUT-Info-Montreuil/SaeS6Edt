@@ -51,5 +51,10 @@ class TeacherService:
 
         db.session.commit()
         return teacher
+    
+    @staticmethod
+    def get_by_user_name(name : str , lastName : str):
+        teacher = Teacher.query.filter_by(name=name , lastName=lastName).first()
+        return teacher
 
 
