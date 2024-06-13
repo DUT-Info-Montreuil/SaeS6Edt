@@ -481,6 +481,12 @@ export class WeekViewTeacherCalendarComponent implements OnInit {
     return this.courses.find(course => course.id == eventId);
   }
 
+  onDateChange(event: Event): void {
+    const inputElement = event.target as HTMLInputElement;
+    const selectedDate = inputElement.value;
+    this.viewDate = new Date(selectedDate);
+  }
+  
   /*
     @function getRessourceNameByInitial
     @desc Returns the name of the resource based on its initial

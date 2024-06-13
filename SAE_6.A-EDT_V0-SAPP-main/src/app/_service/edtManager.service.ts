@@ -87,7 +87,7 @@ export class EdtManagerService {
         @desc: get all promotions for a respEdt
     */
     getPromoEdtManager(): Observable<Promotion[]> {
-        let url = `${this.utilsService.getEndPoint().apiUrl}/responsable/promos`;
+        let url = `${this.utilsService.getEndPoint().apiUrl}/promotions`;
         return this.http.get<Promotion[]>(url, this.utilsService.getJsonHeader())
         .pipe(
             retry(1)
