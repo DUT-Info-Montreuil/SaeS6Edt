@@ -515,6 +515,11 @@ export class WeekCalendarComponent implements OnInit {
     this.toggleWeekCalendar()
   }
 
+  onDateChange(event: Event): void {
+    const inputElement = event.target as HTMLInputElement;
+    const selectedDate = inputElement.value;
+    this.viewDate = new Date(selectedDate);
+  }
 
   /*
       @function getGroupTree
@@ -846,6 +851,7 @@ export class WeekCalendarComponent implements OnInit {
   onChangeSelectedDays(selectedDays: any) {
     this.selectedDays = selectedDays;
   }
+  
 
   /*
       @function closeModalChoice
