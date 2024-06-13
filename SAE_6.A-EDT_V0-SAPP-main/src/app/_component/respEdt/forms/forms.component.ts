@@ -423,7 +423,7 @@ export class FormsComponent implements OnInit, OnDestroy {
         let username = this.formAddProfesseur.value.username!;
         let password = this.formAddProfesseur.value.password!;
         this.teacher = new Teacher(id, name, lastname, username, password, true);
-  
+
         this.teacherService.addTeacher(this.teacher).subscribe({
           next: (response) => {
             // Si la requête est réussie, affiche un toast de succès
