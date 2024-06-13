@@ -17,7 +17,7 @@ def get_FlopEdt_courses():
     # Appel au service pour obtenir les données
     response_data = FlopEdtService.get_FlopEdt_courses(dept, week, year, work_copy)
     
-    # if response_data is None:
-    #     return jsonify({"error": "An error occurred while fetching the data"}), 500
+    if response_data is None:
+        return jsonify({"error": "An error occurred while fetching the data"}), 500
     
     return jsonify(response_data), 200
