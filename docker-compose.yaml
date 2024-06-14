@@ -29,7 +29,6 @@ services:
       - "8083:3306"
     volumes:
       - ./database/SQL_script/init.sql:/docker-entrypoint-initdb.d/init.sql:rw
-      - mysql_data:/var/lib/postgresql/data:rw
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
