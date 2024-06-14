@@ -3,6 +3,8 @@ from models.relations.affiliation_resp_edt import affiliation_resp_edt
 from models.Promotion import Promotion
 from services.ResponsableEdtService import ResponsableEdtService
 from services.PromotionService import PromotionService
+from sqlalchemy import select
+
 
 
 class AffiliationRespEdtService:
