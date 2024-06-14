@@ -1,4 +1,4 @@
-<div class="p-4 md:p-5 space-y-4">
+<div class="p-4 md:p-5 space-y-4 max-h-lvh-50">
     <h5 class="mb-2 text-2xl font-bold tracking-tight text-white">{{elementName}}</h5>
     <form *ngIf="formSelectionne === 'formSalle'" [formGroup]="formModifSalle" (ngSubmit)="onSubmitModifSalle()" >
         <label for="ordi" class="mt-5 block mb-2 text-sm font-medium text-white">nombre d'ordinateurs</label>
@@ -56,3 +56,5 @@
         <div>
     </div>
 </div>
+
+
