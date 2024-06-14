@@ -17,6 +17,11 @@ dataAffiliationRespEdt = [
 
 for respEdt in dataAffiliationRespEdt:
 
-    idResp = respEdt["id_resp"]
+    id_resp = respEdt["id_resp"]
     id_promo = respEdt["id_promo"]
-    AffiliationRespEdtService.affiliate_respedt_to_promo(idResp,id_promo)
+    existing_affiliateRespEdtAffiliate = affiliation_resp_edt.query.filter_by(id_resp=respEdt['id_resp'], id_promo=respEdt['id_promo']).first()
+    if not existing_affiliateRespEdtAffiliate:
+        AffiliationRespEdtService.affiliate_respedt_to_promo(id_resp,id_promo)
+    else:
+        print(f"Affiliation between ResponsableEdt {respEdt['id_resp']} and Promotion {respEdt['id_promo']} already exists.")
+
