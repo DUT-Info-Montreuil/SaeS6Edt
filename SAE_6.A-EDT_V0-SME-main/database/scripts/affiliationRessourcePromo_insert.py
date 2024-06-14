@@ -48,7 +48,7 @@ data = [
 for aff in data:
     initial = aff["id_ressource"]
     idPromo = aff["idPromo"]
-    existing_affiliate = affiliation_ressource_promo.query.filter_by(ressource=aff['id_ressource']).first()
+    existing_affiliate = affiliation_ressource_promo.query.filter_by(initial=aff['id_ressource']).first()
     if not existing_affiliate:
         AffRessourcePromoService.affiliate_ressource_to_promo(initial, idPromo)
     else:

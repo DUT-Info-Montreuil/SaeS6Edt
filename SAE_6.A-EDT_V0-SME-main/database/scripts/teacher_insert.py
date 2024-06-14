@@ -15,7 +15,7 @@ dataTeacher = [
 
 
 for teacher in dataTeacher:
-    existing_teacher = Teacher.query.filter_by(teacher=teacher['username']).first()
+    existing_teacher = Teacher.query.filter_by(username=teacher['username']).first()
     if not existing_teacher:
         TeacherService.create_teacher(teacher)
     else:

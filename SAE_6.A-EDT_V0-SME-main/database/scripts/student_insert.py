@@ -48,7 +48,7 @@ dataUsers = [
 ]
 
 for user in dataUsers:
-    existing_user = User.query.filter_by(student=user['username']).first()
+    existing_user = User.query.filter_by(username=user['username']).first()
     if not existing_user:
         StudentService.create_student(user)
     else:

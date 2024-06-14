@@ -132,7 +132,7 @@ dataCours = [
 
 
 for cours in dataCours:
-    existing_cours = Cours.query.filter_by(cours=cours['id']).first()
+    existing_cours = Cours.query.filter_by(id=cours['id']).first()
     if not existing_cours:
         CoursService.create_course(cours)
     else:

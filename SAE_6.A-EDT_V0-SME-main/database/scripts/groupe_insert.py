@@ -27,7 +27,7 @@ dataGroupes = [
 
 
 for groupe in dataGroupes:
-    existing_groupe = Groupe.query.filter_by(groupe=groupe['name']).first()
+    existing_groupe = Groupe.query.filter_by(name=groupe['name']).first()
     if not existing_groupe:
         GroupeService.create_groupe(groupe)
     else:

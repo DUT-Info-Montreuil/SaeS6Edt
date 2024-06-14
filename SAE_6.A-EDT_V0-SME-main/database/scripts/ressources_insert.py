@@ -70,7 +70,7 @@ dataRessources = [
 
 
 for ressource in dataRessources:
-    existing_ressource = Ressources.query.filter_by(ressource=ressource['name']).first()
+    existing_ressource = Ressources.query.filter_by(name=ressource['name']).first()
     if not existing_ressource:
         RessourcesService.create_resource(ressource)
     else:
