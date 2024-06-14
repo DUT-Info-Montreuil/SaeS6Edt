@@ -40,6 +40,3 @@ services:
       MYSQL_ROOT_PASSWORD: root
     ports:
       - "8808:80"
-
-volumes:
-  mysql_data:
