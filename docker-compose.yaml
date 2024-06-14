@@ -27,6 +27,8 @@ services:
       MYSQL_PASSWORD: root
     ports:
       - "8083:3306"
+    volumes:
+      - db_data:/var/lib/mysql
     
 
   phpmyadmin:
@@ -38,3 +40,6 @@ services:
       MYSQL_ROOT_PASSWORD: root
     ports:
       - "8808:80"
+
+volumes:
+  db_data:
