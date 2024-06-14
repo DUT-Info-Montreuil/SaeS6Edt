@@ -23,9 +23,17 @@ done
 # Deploy the database and phpMyAdmin
 # docker-compose up -d --build db phpmyadmin
 
-docker-compose down 
+docker-compose down courroux-sapp courroux-sme
 
-docker-compose up -d --build db
+
+# Check if the 'db' container is running
+if [ "$(docker ps -q -f name=courroux_db)" ]; then
+    echo "The 'db' container is already running."
+else
+    echo "Starting the 'db' container..."
+    docker-compose up -d --build db
+fi
+# docker-compose up -d --build db
 
 
 # ./wait-for-it.sh -t 0 -q localhost:8083
