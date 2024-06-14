@@ -3,7 +3,7 @@ from models.relations.affiliation_resp_edt import affiliation_resp_edt
 from models.Promotion import Promotion
 from services.ResponsableEdtService import ResponsableEdtService
 from services.PromotionService import PromotionService
-from sqlalchemy import select
+
 
 
 
@@ -12,12 +12,8 @@ class AffiliationRespEdtService:
   @staticmethod
   def affiliate_respedt_to_promo(resp_id, promo_id):
         # Vérifiez si l'affiliation existe déjà
-        affiliation_exists = db.session.execute(
-            select([affiliation_resp_edt]).where(
-                (affiliation_resp_edt.c.id_resp == resp_id) & (affiliation_resp_edt.c.id_promo == promo_id)
-            )
-        ).first()
-    # Create an instance of the user_groupe table
+        affiliation_exists = db.session.query(affiliation_resp_edt).filter_by(id_resp=resp_id, id_promo=promo_id).first()
+        # Create an instance of the user_groupe table
         if not affiliation_exists:
             resp_edt_association = affiliation_resp_edt.insert().values(id_resp=resp_id, id_promo=promo_id)
 
