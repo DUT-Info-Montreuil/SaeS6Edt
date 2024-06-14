@@ -3,28 +3,28 @@ from database.config import db
 from services.ResponsableEdtService import ResponsableEdtService
 
 
-# dataRespEDT = [
-#   {
-#     'name' : 'Sihem',
-#     'lastname' : 'Belabbes',
-#     'username' : 'sbelabbes',
-#     'password' : 'sihem1234'
-#   },
-#   {
-#     'name' : 'Anne',
-#     'lastname' : 'Ricordeau',
-#     'username' : 'aricordeau',
-#     'password' : 'anne1234'
-#   }
-# ]
 dataRespEDT = [
   {
-    'name' : 'ADMIN',
-    'lastname' : 'admin',
-    'username' : 'admin',
-    'password' : 'admin1234'
+    'name' : 'Sihem',
+    'lastname' : 'Belabbes',
+    'username' : 'sbelabbes',
+    'password' : 'sihem1234'
   },
+  {
+    'name' : 'Anne',
+    'lastname' : 'Ricordeau',
+    'username' : 'aricordeau',
+    'password' : 'anne1234'
+  }
 ]
+# dataRespEDT = [
+#   {
+#     'name' : 'ADMIN',
+#     'lastname' : 'admin',
+#     'username' : 'admin',
+#     'password' : 'admin1234'
+#   },
+# ]
 
 
 for resp in dataRespEDT:
