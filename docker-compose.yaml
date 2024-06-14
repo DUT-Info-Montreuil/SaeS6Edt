@@ -19,7 +19,7 @@ services:
   db:
     image: mysql:latest
     container_name: courroux_db
-    restart: unless-stopped
+    restart: no
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: courroux
@@ -27,8 +27,7 @@ services:
       MYSQL_PASSWORD: root
     ports:
       - "8083:3306"
-    volumes:
-      - ./database/SQL_script/init.sql:/docker-entrypoint-initdb.d/init.sql:rw
+    
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
