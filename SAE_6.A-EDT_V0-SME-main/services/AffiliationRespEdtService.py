@@ -9,14 +9,23 @@ class AffiliationRespEdtService:
 
   @staticmethod
   def affiliate_respedt_to_promo(resp_id, promo_id):
+        # Vérifiez si l'affiliation existe déjà
+        affiliation_exists = db.session.execute(
+            select([affiliation_resp_edt]).where(
+                (affiliation_resp_edt.c.id_resp == resp_id) & (affiliation_resp_edt.c.id_promo == promo_id)
+            )
+        ).first()
     # Create an instance of the user_groupe table
-    resp_edt_association = affiliation_resp_edt.insert().values(id_resp=resp_id, id_promo=promo_id)
+        if not affiliation_exists:
+            resp_edt_association = affiliation_resp_edt.insert().values(id_resp=resp_id, id_promo=promo_id)
 
-    # Add the association to the database session
-    db.session.execute(resp_edt_association)
+            # Add the association to the database session
+            db.session.execute(resp_edt_association)
 
-    # Commit the changes to the database
-    db.session.commit()
+             # Commit the changes to the database
+            db.session.commit()
+        else:
+            print(f"Affiliation between ResponsableEdt {resp_id} and Promotion {promo_id} already exists.")
 
 
   @staticmethod
