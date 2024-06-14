@@ -39,8 +39,8 @@ class SalleService:
     
     # Met à jour les informations d'une salle avec les valeurs fournies
     @staticmethod
-    def update_salle(name, ordi, tableauNumerique, videoProjecteur):
-        salle = SalleService.get_salle_by_name(name)
+    def update_salle(nom, ordi, tableauNumerique, videoProjecteur):
+        salle = SalleService.get_salle_by_name(nom)
         salle.ordi = ordi
         salle.tableauNumerique = tableauNumerique
         salle.videoProjecteur = videoProjecteur
