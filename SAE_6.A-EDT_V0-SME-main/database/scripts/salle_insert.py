@@ -69,7 +69,7 @@ dataSalles = [
 
 
 for salles in dataSalles:
-    existing_salle = Salle.query.filter_by(no=salles['nom']).first()
+    existing_salle = Salle.query.filter_by(nom=salles['nom']).first()
     if not existing_salle:
         SalleService.create_salle(salles)
     else:
