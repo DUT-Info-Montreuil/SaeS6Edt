@@ -1,6 +1,8 @@
 node {
   stage('SCM') {
-    checkout scm
+    checkout([$class: 'GitSCM', 
+              branches: [[name: '*/main']], 
+              userRemoteConfigs: [[url: 'https://github.com/DUT-Info-Montreuil/SaeS6Edt.git']]])
   }
   stage('SonarQube Analysis') {
     def scannerHome = tool 'SonarScanner';
