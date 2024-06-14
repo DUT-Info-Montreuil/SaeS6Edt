@@ -70,4 +70,8 @@ dataRessources = [
 
 
 for ressource in dataRessources:
-    RessourcesService.create_resource(ressource)
+    existing_ressource = Ressources.query.filter_by(ressource=ressource['name']).first()
+    if not existing_ressource:
+        RessourcesService.create_resource(ressource)
+    else:
+        print(f"Ressource with name {ressource['name']} already exists.")

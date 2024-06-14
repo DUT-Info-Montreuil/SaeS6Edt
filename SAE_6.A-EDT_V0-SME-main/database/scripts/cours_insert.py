@@ -132,7 +132,10 @@ dataCours = [
 
 
 for cours in dataCours:
-    
-    CoursService.create_course(cours)
+    existing_cours = Cours.query.filter_by(cours=cours['id']).first()
+    if not existing_cours:
+        CoursService.create_course(cours)
+    else:
+        print(f"Cours with id {cours['id']} already exists.")
 
 

@@ -17,15 +17,11 @@ dataRespEDT = [
     'password' : 'anne1234'
   }
 ]
-# dataRespEDT = [
-#   {
-#     'name' : 'ADMIN',
-#     'lastname' : 'admin',
-#     'username' : 'admin',
-#     'password' : 'admin1234'
-#   },
-# ]
 
 
 for resp in dataRespEDT:
-    ResponsableEdtService.create_responsable_edt(resp)
+    existing_resp = ResponsableEdt.query.filter_by(username=resp['username']).first()
+    if not existing_resp:
+        ResponsableEdtService.create_responsable_edt(resp)
+    else:
+        print(f"Responsable with username {resp['username']} already exists.")

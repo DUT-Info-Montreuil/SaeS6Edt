@@ -6,22 +6,19 @@ from services.TeacherService import TeacherService
 dataTeacher = [
 
     {
-      'name' : 'Nedra',
-      'lastname' : 'Nauwynck',
-      'username' : 'nnauwynck',
-      'password' : 'nedra1234'
-    },
-
-    {
-      'name' : 'Philippe',
-      'lastname' : 'Bonnot',
-      'username' : 'pbonnot',
-      'password' : 'philippe1234'
+      'name' : 'Amélie',
+      'lastname' : 'Golven',
+      'username' : 'agolven',
+      'password' : 'agolven1234'
     }
 ]
 
 
 for teacher in dataTeacher:
-    TeacherService.create_teacher(teacher)
+    existing_teacher = Teacher.query.filter_by(teacher=teacher['username']).first()
+    if not existing_teacher:
+        TeacherService.create_teacher(teacher)
+    else:
+        print(f"Teacher with username {teacher['username']} already exists.")
     
 

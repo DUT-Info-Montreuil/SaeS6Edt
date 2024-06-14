@@ -54,4 +54,9 @@ dataPromotions = [
 ]
 
 for promotion in dataPromotions:
-    PromotionService.create_promo(promotion)
+    existing_promo = Promotion.query.filter_by(name=promotion['name']).first()
+    if not existing_promo:
+        PromotionService.create_promo(promotion)
+    else:
+        print(f"Promotion with name {promotion['name']} already exists.")
+    

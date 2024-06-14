@@ -48,4 +48,8 @@ data = [
 for aff in data:
     initial = aff["id_ressource"]
     idPromo = aff["idPromo"]
-    AffRessourcePromoService.affiliate_ressource_to_promo(initial, idPromo)
+    existing_affiliate = affiliation_ressource_promo.query.filter_by(ressource=aff['id_ressource']).first()
+    if not existing_affiliate:
+        AffRessourcePromoService.affiliate_ressource_to_promo(initial, idPromo)
+    else:
+        print(f"Ressource with id {aff['id_ressource']} already exists.")

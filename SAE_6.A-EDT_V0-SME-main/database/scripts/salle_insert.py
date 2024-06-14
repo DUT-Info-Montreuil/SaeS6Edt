@@ -69,9 +69,11 @@ dataSalles = [
 
 
 for salles in dataSalles:
+    existing_salle = Salle.query.filter_by(salle=salles['name']).first()
+    if not existing_salle:
+        SalleService.create_salle(salles)
+    else:
+        print(f"Salle with name {salles['name']} already exists.")
 
-
-
-    SalleService.create_salle(salles)
 
     
