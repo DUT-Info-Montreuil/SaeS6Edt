@@ -34,7 +34,10 @@ with app.app_context():
     # db.drop_all()
     # db.create_all()
     # insert_data()
-    drop_admin()
+    try :
+        drop_admin()
+    except:
+        db.create_all()
     insert_data()
 
     
